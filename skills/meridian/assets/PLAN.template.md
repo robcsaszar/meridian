@@ -1,6 +1,6 @@
 # [Title]
 
-> Meridian map · Status: charting | route-ready | superseded · Started: [date]
+> Meridian map · Status: charting | route-ready | superseded · Started: [date] · Tracker: [github-issues | jira | local-markdown]
 
 ## Destination
 
@@ -18,21 +18,23 @@
 
 | # | Decision | Resolution | Via |
 |---|----------|------------|-----|
-| 1 | [what was open] | [one-line answer] | [J / R / E] |
+| 1 | [ticket name — linked on a tracker] | [one-line gist; detail lives on the ticket] | [J / R / E / T] |
 
 ## Frontier
 
-| # | Open decision | Type | Blocked by |
-|---|---------------|------|------------|
-| 2 | [question the work cannot proceed without] | [J / R / E] | [— or #n, or "deferred → route #n"] |
+<!-- On a tracker this section reads "open child issues — see query" and stays empty. On local markdown, the rows below are the tickets. -->
+
+| # | Open decision | Type | Blocked by | Claimed by |
+|---|---------------|------|------------|------------|
+| 2 | [question the work cannot proceed without] | [J / R / E / T] | [— or #n, or "deferred → route #n"] | [empty until claimed] |
 
 ## Fog
 
-- [Too unclear to frame as a decision yet] — clarifies when: [observable trigger]
+- [Too unclear to state as a question yet] — clarifies when: [observable trigger]
 
 ## Ruled out
 
-- [Path or option] — killed because: [reason. Stays here forever; dead ends make the survivors credible.]
+- [Path, option, or out-of-scope ticket] — killed because: [reason. Stays here forever; dead ends make the survivors credible.]
 
 ## Route
 
