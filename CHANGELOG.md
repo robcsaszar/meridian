@@ -6,7 +6,7 @@ All notable changes to this project are documented here. Format follows [Keep a 
 
 ### Added
 
-- Workspace resolution ladder: persisted `## Planning` section in `CONTEXT.md` (else `AGENTS.md`) → user-named tracker → inference from repo signals (`.github/ISSUE_TEMPLATE/`, `gh` auth, Jira keys in commits, existing `plans/`) → local markdown. Rungs after the persisted one confirm before the first write and offer to persist the choice so later sessions skip the step.
+- Workspace resolution ladder: persisted `## Planning` section in `CONTEXT.md` (else `AGENTS.md`) → user-named tracker → inference from repo signals (`.github/ISSUE_TEMPLATE/`, open issues on the GitHub remote, Jira keys in commits, existing `plans/`) → local markdown. Rungs after the persisted one confirm before the first write and offer to persist the choice so later sessions skip the step.
 - Per-tracker operation references under `references/trackers/` — `github-issues.md`, `jira.md`, `local-markdown.md` — each covering the same seven operations (create map, create ticket, wire blocking, claim, frontier query, resolve and close, graduate fog) so SKILL.md stays tracker-agnostic.
 - Label scheme `plan:map`, `plan:judgment`, `plan:research`, `plan:experiment`, `plan:task`, `plan:route`, with an ask-before-reusing guard for pre-existing `plan:` labels.
 - Fourth ticket type, **task**, for work that must happen before a decision is possible; tiebreaker against experiment (resolves a decision vs. enables one).

@@ -13,7 +13,7 @@ Before any write, settle where the map lives. Work the ladder top-down; stop at 
 
 1. **Persisted choice** — a `## Planning` section in `CONTEXT.md`, else in `AGENTS.md`. If present, use it silently; no confirm.
 2. **The user names one** in the request.
-3. **Infer from the repo** — scan for signals and rank them: `.github/ISSUE_TEMPLATE/` or an authenticated `gh` against a GitHub remote → `github-issues`; Jira keys in recent commit messages or branch names, `.jira*`/Atlassian config, a Jira URL in docs → `jira`; an existing `plans/` directory → `local-markdown`. Cite the signal when proposing.
+3. **Infer from the repo** — scan for signals and rank them: `.github/ISSUE_TEMPLATE/` or open issues on the GitHub remote → `github-issues` (a GitHub remote alone is a weak signal, proposed only when nothing stronger exists; an authenticated `gh` is a prerequisite for writing, not a signal); Jira keys in recent commit messages or branch names, `.jira*`/Atlassian config, a Jira URL in docs → `jira`; an existing `plans/` directory → `local-markdown`. Cite the signal when proposing.
 4. **Nothing found** → `local-markdown`.
 
 Rungs 2–4 end in a **confirm** before the first write — planning writes into a shared system — phrased as a judgment question with the inferred tracker recommended. On confirm, ask once: "Record this in CONTEXT.md (or AGENTS.md) so future sessions skip this step?" Write the section only on yes; if neither file exists, offer to create `AGENTS.md`. The persisted line carries what the tracker doc needs:
@@ -73,7 +73,7 @@ Ask at most two orienting questions here; deeper questions belong on the frontie
 
 **No fog, no map.** If the Destination is signed and the breadth-first sweep in Phase 3a surfaces nothing that outlives this session, say so and ask how the user wants to proceed instead of charting a map for one sitting's work.
 
-Completion criterion: the workspace is confirmed, and the map exists with Bearings filled and either a signed Destination or a named fog symptom.
+Completion criterion: the workspace is resolved (confirmed where the ladder requires it), and the map exists with Bearings filled and either a signed Destination or a named fog symptom.
 
 ## Phase 2 — Diverge (only when fogbound)
 
@@ -98,7 +98,7 @@ Completion criterion: the user has picked a direction, the Destination is writte
 
 Sweep the whole body of work breadth-first — scope, users, data, interfaces, sequencing, risks, quality bar — and write every open decision as its own ticket before resolving any. Type each by what unblocks it. What cannot yet be framed as a question goes to Fog with a note on what would clarify it — the test is whether the question can be *stated* precisely now, not whether it can be answered. Do not pre-slice fog into tickets.
 
-Create tickets, then wire blocking in a **second pass** — items need ids before they can reference each other. Fire scouts on every research ticket now; they run in parallel and report back as text, and their findings are recorded the way 3b's Research step says. Then stop: charting resolves nothing else.
+Create tickets, then wire blocking in a **second pass** — items need ids before they can reference each other. Claim every research ticket and fire a scout on each now; they run in parallel and report back as text, and their findings are recorded the way 3b's Research step says. Then stop: charting resolves nothing else.
 
 ### 3b — Work one ticket (work session)
 
@@ -147,7 +147,7 @@ Completion criterion: every log entry is reflected in the Route or explicitly ne
   **Why:** With only one decision to reach, there is nothing to rush toward — the pull to finish the frontier is what turns an interview into a monologue that decides on the user's behalf.
 
 - **NEVER resolve a judgment ticket without the user**
-  **Instead:** One question at a time, recommendation and weakness attached; wait.
+  **Instead:** Ask in the 3b question shape and wait for the answer.
   **Why:** A plan fixed before its questions were asked ignores the answers that would have changed it.
 
 - **NEVER invent timelines or effort estimates**
