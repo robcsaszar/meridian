@@ -14,6 +14,12 @@ Thanks for considering a contribution to `meridian`. This is a small, single-ski
 2. Keep edits inside `skills/meridian/`.
 3. Preserve the honesty rules: ruled-out paths stay named with kill reasons, barren techniques admit it, recommendations name their main weakness. Any change to the method should keep those properties intact.
 
+## Releasing (maintainers)
+
+1. Bump the version in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`, and add a dated `## [X.Y.Z]` entry to `CHANGELOG.md` with its link line.
+2. Merge to `main`.
+3. Run the **Release** workflow from the Actions tab with the tag (`vX.Y.Z`) and the merge commit as target. It tags, extracts the CHANGELOG entry, and publishes the GitHub release. Don't push tags by hand.
+
 ## Questions
 
 Open an issue. There's no separate chat or forum for this project.
