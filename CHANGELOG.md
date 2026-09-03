@@ -26,6 +26,12 @@ All notable changes to this project are documented here. Format follows [Keep a 
 
 - Silent fallback to `plans/<slug>.md` when instruction files did not name a tracker.
 
+## [0.2.1] - 2026-08-29
+
+### Changed
+
+- Negative triggers in the description corrected: interrogating shipped work now points at `socratic` (was a stale sibling name), and a new negative trigger points session-conduct reviews at `retrospective`. Planning behavior is unchanged.
+
 ## [0.2.0] - 2026-08-06
 
 ### Added
@@ -40,5 +46,6 @@ All notable changes to this project are documented here. Format follows [Keep a 
 - Initial release: meridian skill.
 
 [0.3.0]: https://github.com/robcsaszar/meridian/releases/tag/v0.3.0
+[0.2.1]: https://github.com/robcsaszar/meridian/releases/tag/v0.2.1
 [0.2.0]: https://github.com/robcsaszar/meridian/releases/tag/v0.2.0
 [0.1.0]: https://github.com/robcsaszar/meridian/releases/tag/v0.1.0
