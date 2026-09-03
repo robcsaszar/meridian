@@ -19,18 +19,29 @@ ALWAYS:
 
 ## Releasing
 
-Releases are cut by the `Release` workflow (`.github/workflows/release.yml`), never by hand. It is a manual `workflow_dispatch` that takes a tag and a target ref, slices that version's entry out of `CHANGELOG.md` as the notes, and creates the tag and the GitHub release in one `gh release create`.
+Releases are cut by the **Release** workflow (`.github/workflows/release.yml`), never by hand. It is a manual `workflow_dispatch` with one input, `tag`, and it releases the commit at the tip of the branch it is run on. Run it on `main`.
 
-When to run it: after the release commit is merged to `main` — the workflow file must be on the default branch to be dispatchable, and the target should be the merge commit so the tag lands on `main`'s history.
+The workflow, in order:
+1. Rejects a tag that is not `vX.Y.Z`, or that already exists.
+2. Fails unless `version` in `.claude-plugin/plugin.json` and `plugins[0].version` in `.claude-plugin/marketplace.json` both equal `X.Y.Z`.
+3. Takes the `## [X.Y.Z]` block from `CHANGELOG.md` as the release notes, and fails if there is none.
+4. Creates the tag at the checked-out commit and publishes the GitHub release with those notes.
 
-Before dispatching, check:
-- Version parity: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and the newest `## [X.Y.Z] - YYYY-MM-DD` heading in `CHANGELOG.md` all carry the same version, and the entry has its link line at the bottom of the file.
-- The CHANGELOG entry exists and is complete. The workflow fails on a missing entry by design; do not work around it with a hand-written note.
+Nothing is created until every check passes, so a failed run leaves nothing to clean up.
 
-How: Actions tab → Release → Run workflow with `tag=vX.Y.Z` and `target=<merge sha>`, or from a shell:
+To prepare a release, in one PR:
+- Set the same new version in `.claude-plugin/plugin.json` and `.claude-plugin/marketplace.json`.
+- Add a `## [X.Y.Z] - YYYY-MM-DD` block at the top of `CHANGELOG.md`, and its `[X.Y.Z]: …` link reference at the bottom.
+- Merge to `main`.
+
+Then run the workflow on `main` with `tag=vX.Y.Z`, from the Actions tab (**Release → Run workflow**) or from a shell:
 
 ```sh
-gh workflow run release.yml -f tag=vX.Y.Z -f target=<merge sha>
+gh workflow run release.yml --ref main -f tag=vX.Y.Z
 ```
 
-NEVER push a tag or create a release outside this workflow — a tag made by hand has no notes tied to it, and a later workflow run for the same version fails because the tag already exists.
+Afterwards, confirm the release exists and its notes match the changelog block.
+
+NEVER:
+- Never push a tag or create a release outside the workflow. A hand-made tag makes the workflow refuse that version, and a hand-written release skips the changelog and version checks.
+- Never work around a failed run by hand-writing notes or skipping a check. Fix the changelog or the manifests, merge, and re-run.
