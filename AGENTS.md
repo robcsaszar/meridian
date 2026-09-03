@@ -16,3 +16,21 @@ ASK:
 
 ALWAYS:
 - Keep the skill's content generic — it must read as planning guidance for any project, never tied to one codebase or tracker product.
+
+## Releasing
+
+Releases are cut by the `Release` workflow (`.github/workflows/release.yml`), never by hand. It is a manual `workflow_dispatch` that takes a tag and a target ref, slices that version's entry out of `CHANGELOG.md` as the notes, and creates the tag and the GitHub release in one `gh release create`.
+
+When to run it: after the release commit is merged to `main` — the workflow file must be on the default branch to be dispatchable, and the target should be the merge commit so the tag lands on `main`'s history.
+
+Before dispatching, check:
+- Version parity: `.claude-plugin/plugin.json`, `.claude-plugin/marketplace.json`, and the newest `## [X.Y.Z] - YYYY-MM-DD` heading in `CHANGELOG.md` all carry the same version, and the entry has its link line at the bottom of the file.
+- The CHANGELOG entry exists and is complete. The workflow fails on a missing entry by design; do not work around it with a hand-written note.
+
+How: Actions tab → Release → Run workflow with `tag=vX.Y.Z` and `target=<merge sha>`, or from a shell:
+
+```sh
+gh workflow run release.yml -f tag=vX.Y.Z -f target=<merge sha>
+```
+
+NEVER push a tag or create a release outside this workflow — a tag made by hand has no notes tied to it, and a later workflow run for the same version fails because the tag already exists.
