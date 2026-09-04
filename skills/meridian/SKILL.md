@@ -1,6 +1,6 @@
 ---
 name: meridian
-description: "Plans a body of work into a durable decision map on the repo's issue tracker (or a plans/ file) and a route of tracer-bullet tickets. Use whenever the user wants to plan something out — a feature or bug that needs scoping before code, an idea too vague to act on, a wish to brainstorm directions, or a feeling of being stuck in obvious ideas — even if they don't ask for a formal plan. Also use to chart a new map or, once its frontier is empty, to write its spec and route. Trigger phrases — plan this out, help planning, let's brainstorm, scope this, break this down, turn this idea into a plan, roadmap this, chart the route, to spec, to tickets. Don't use for working or implementing a ticket on an existing map (transit), naming or wording brainstorms, personal or event logistics, tasks the user mainly wants done now, a quick sketch of a small in-session change, auditing existing code (crucible), interrogating shipped work (socratic), or reviewing how the session was conducted (retrospective)."
+description: "Plans a body of work into a durable decision map — a plans/ file by default, or a configured issue tracker — and a route of tracer-bullet tickets. Use whenever the user wants to plan something out — a feature or bug that needs scoping before code, an idea too vague to act on, a wish to brainstorm directions, or a feeling of being stuck in obvious ideas — even if they don't ask for a formal plan. Also use to chart a new map or, once its frontier is empty, to write its spec and route. Trigger phrases — plan this out, help planning, let's brainstorm, scope this, break this down, turn this idea into a plan, roadmap this, chart the route, to spec, to tickets. Don't use for working or implementing a ticket on an existing map (transit), naming or wording brainstorms, personal or event logistics, tasks the user mainly wants done now, a quick sketch of a small in-session change, auditing existing code (crucible), interrogating shipped work (socratic), or reviewing how the session was conducted (retrospective)."
 ---
 
 # Meridian
@@ -9,14 +9,13 @@ The plan is the meridian — the fixed line the whole body of work steers by. Ta
 
 ## The workspace
 
-Before any write, settle where the map lives. Work the ladder top-down; stop at the first rung that answers.
+Before any write, settle where the map lives. The default is a file in the repo; a tracker is used only when one is configured or named — never adopted on a repo signal alone.
 
 1. **Persisted choice** — a `## Planning` section in `CONTEXT.md`, else in `AGENTS.md`. If present, use it silently; no confirm.
-2. **The user names one** in the request.
-3. **Infer from the repo** — scan for signals and rank them: `.github/ISSUE_TEMPLATE/` or open issues on the GitHub remote → `github-issues` (a bare GitHub remote is a weak signal; an authenticated `gh` is a prerequisite for writing, not a signal); Jira keys in recent commit messages or branch names, `.jira*`/Atlassian config, a Jira URL in docs → `jira`; an existing `plans/` directory → `local-markdown`. Cite the signal when proposing.
-4. **Nothing found** → `local-markdown`.
+2. **The user names one** in the request — `github-issues`, `jira`, or `local-markdown`.
+3. **Otherwise `local-markdown`** — `plans/<slug>.md`. No confirm: a file in the working tree is not a shared system. If the repo shows tracker signals (`.github/ISSUE_TEMPLATE/`, open issues on the remote, Jira keys in commits), say so in one line and offer the tracker as an alternative; the default stays the file.
 
-Rungs 2–4 end in a **confirm** before the first write, phrased as a judgment question with the inferred tracker recommended. On confirm, ask once: "Record this in CONTEXT.md (or AGENTS.md) so future sessions skip this step?" Write the section only on yes; if neither file exists, offer to create `AGENTS.md`. The persisted line carries what the tracker doc needs:
+A tracker named on rung 2 ends in a **confirm** before the first write, phrased as a judgment question. On confirm, ask once: "Record this in CONTEXT.md (or AGENTS.md) so future sessions skip this step?" Write the section only on yes; if neither file exists, offer to create `AGENTS.md`. Offer the same once for a local-markdown map that outlives one session. The persisted line carries what the tracker doc needs:
 
 ```markdown
 ## Planning
@@ -26,11 +25,11 @@ Tracker: github-issues · Map query: label plan:map
 
 For Jira, also record the project key, the map and ticket issue types, and the blocking link-type name.
 
-As soon as the rung resolves — before the confirm, since reads such as the map query need none — **MANDATORY READ** `references/trackers/<tracker>.md`. Every map operation — create map, create ticket, wire blocking, claim, frontier query, resolve and close, graduate fog — is done the way that doc says, never improvised. If the doc is missing, fall back to `local-markdown.md`; if that is missing too, use `assets/PLAN.template.md` and tell the user the tracker reference was unavailable.
+As soon as the rung resolves — before any confirm, since reads such as the map query need none — **MANDATORY READ** `references/trackers/<tracker>.md`. Every map operation — create map, create ticket, wire blocking, claim, frontier query, resolve and close, graduate fog — is done the way that doc says, never improvised. If the doc is missing, fall back to `local-markdown.md`; if that is missing too, use `assets/PLAN.template.md` and tell the user the tracker reference was unavailable.
 
 ## The map
 
-One map per effort. On a tracker it is a single map item labelled `plan:map` with tickets as child items; on local markdown it is `plans/<slug>.md` from `assets/PLAN.template.md`. Escalate to `plans/<slug>/` only when Bearings demand multiple documents (spec, PRD) — the map stays the index.
+One map per effort. By default it is `plans/<slug>.md` from `assets/PLAN.template.md`, tickets as rows in its Frontier table; on a tracker it is a single map item labelled `plan:map` with tickets as child items. Escalate to `plans/<slug>/` only when Bearings demand multiple documents (spec, PRD) — the map stays the index.
 
 **Seven sections, always all,** in `assets/PLAN.template.md` order — Destination, Bearings, Decision log, Frontier, Fog, Ruled out, Route; the template says what each holds. On a tracker the Frontier section stays empty and is found by query.
 
@@ -118,7 +117,7 @@ Completion criterion: every log entry is reflected in a route item or explicitly
 ## NEVER
 
 - **NEVER write to a tracker before the workspace is confirmed**
-  **Instead:** Walk the ladder; confirm on rungs 2–4; persist only when the user says yes.
+  **Instead:** Walk the ladder; confirm a named tracker; default to the plans/ file; persist only when the user says yes.
   **Why:** A tracker is shared. An unasked-for map item with five new labels is noise the whole team sees and someone has to clean up.
 
 - **NEVER resolve a non-research ticket in a chart or route session**

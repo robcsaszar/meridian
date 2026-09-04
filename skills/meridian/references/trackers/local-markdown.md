@@ -1,6 +1,6 @@
 # Tracker: Local Markdown
 
-Loaded when the workspace resolves to `local-markdown` — no tracker was found or confirmed. The map is a file, and tickets are rows in it: there is no separate ticket object, so the seven operations below act on tables inside `plans/<slug>.md`. This is the only tracker where the Frontier section *is* the ticket list.
+Loaded when the workspace resolves to `local-markdown` — the default whenever no tracker is persisted or named. The map is a file, and tickets are rows in it: there is no separate ticket object, so the seven operations below act on tables inside `plans/<slug>.md`. This is the only tracker where the Frontier section *is* the ticket list.
 
 Persisted line: `Tracker: local-markdown · Map query: plans/*.md`
 

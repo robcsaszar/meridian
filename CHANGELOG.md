@@ -14,6 +14,7 @@ All notable changes to this project are documented here. Format follows [Keep a 
 
 ### Changed
 
+- The workspace ladder no longer infers a tracker from repo signals. The default is `plans/<slug>.md` (local markdown, no confirm); a tracker is used only when persisted in `CONTEXT.md`/`AGENTS.md` or named by the user, and repo signals are mentioned once as an alternative.
 - The **work session** (formerly Phase 3b) moves to the companion skill **transit**, which claims one ticket, resolves it by label, records and ripples. Meridian charts and routes; it never resolves a non-research ticket. Description, Sessions, and NEVER rules updated to match.
 - Research findings are recorded per the tracker doc's Resolve and close; a finding that implies a decision becomes a judgment ticket, never a decision.
 - Phase 2 degraded mode: a missing divergence reference ends the session with the fog symptom recorded instead of running a condensed table inline.
