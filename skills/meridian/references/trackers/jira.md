@@ -22,7 +22,7 @@ One issue of **Map type** in **Project**, labelled `plan:map`, summary = the eff
 
 ## Create a ticket
 
-One issue of **Ticket type** with a single type label, summary = the ticket's name, description = `## Question` plus the decision. Set its parent to the map (the parent field, or the epic link on older instances — whichever the hierarchy uses). Route items use `plan:route`.
+One issue of **Ticket type** with a single type label, summary = the ticket's name, description = `## Question` plus the decision. Set its parent to the map (the parent field, or the epic link on older instances — whichever the hierarchy uses). Route items use `plan:route` plus a mode label, `ready-for-agent` or `ready-for-human` (dash style if the instance rejects colons); task tickets carry the same pair.
 
 ## Wire blocking
 
@@ -36,7 +36,7 @@ Set the assignee before any work; an unassigned open ticket is unclaimed.
 
 JQL for the candidates, then drop any with an open blocker:
 
-```
+```text
 project = ABC AND parent = <map key> AND statusCategory != Done AND assignee IS EMPTY
   AND labels IN (plan:judgment, plan:research, plan:experiment, plan:task)
 ```

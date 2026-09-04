@@ -1,12 +1,12 @@
 # Tracker: Local Markdown
 
-Loaded when the workspace resolves to `local-markdown` — no tracker was found or confirmed. The map is a file, and tickets are rows in it: there is no separate ticket object, so the seven operations below act on tables inside `plans/<slug>.md`. This is the only tracker where the Frontier section *is* the ticket list.
+Loaded when the workspace resolves to `local-markdown` — the default whenever no tracker is persisted or named. The map is a file, and tickets are rows in it: there is no separate ticket object, so the seven operations below act on tables inside `plans/<slug>.md`. This is the only tracker where the Frontier section *is* the ticket list.
 
 Persisted line: `Tracker: local-markdown · Map query: plans/*.md`
 
 ## Labels
 
-There are no labels. The type lives in the Frontier table's Type column as J / R / E / T (judgment, research, experiment, task). Route items live only in the Route section, so they need no marker.
+There are no labels. The type lives in the Frontier table's Type column as J / R / E / T (judgment, research, experiment, task). Task rows append `[agent]` or `[human]` to the ticket name to declare their mode. Route items live only in the Route section; each carries its mode in the line as `[agent]` or `[human]`.
 
 ## Create the map
 

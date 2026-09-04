@@ -6,12 +6,14 @@ Persisted line: `Tracker: github-issues · Map query: label plan:map`
 
 ## Labels
 
-Ensure the six labels exist once per repo; create any that are missing.
+Ensure the six `plan:` labels and the two mode labels exist once per repo; create any that are missing.
 
 ```sh
 for l in plan:map plan:judgment plan:research plan:experiment plan:task plan:route; do
   gh label create "$l" --color 1D76DB --description "meridian planning" 2>/dev/null || true
 done
+gh label create ready-for-agent --color 0E8A16 --description "AFK — an agent may take it" 2>/dev/null || true
+gh label create ready-for-human --color D93F0B --description "HITL — needs a person" 2>/dev/null || true
 ```
 
 If a `plan:` label already exists with a different description, stop and ask before reusing it.
@@ -37,7 +39,9 @@ SUB_ID=$(gh api "repos/{owner}/{repo}/issues/$SUB_NUM" --jq .id)
 gh api -X POST "repos/{owner}/{repo}/issues/$MAP_NUM/sub_issues" -F sub_issue_id="$SUB_ID"
 ```
 
-Route items (Phase 4) are created the same way with `plan:route`.
+Route items (Phase 4) are created the same way with `plan:route` **plus a mode label** — `ready-for-agent` or `ready-for-human` — so an unattended transit run can tell what it may take. Task tickets carry the same pair. Route item body: `references/route.md` § Route item body.
+
+Route items are closed by the pull request that ships them (`Closes #<n>` in its body), never by hand; the map's Route checkbox is ticked once the item is closed.
 
 ## Wire blocking
 
