@@ -6,7 +6,7 @@ Persisted line: `Tracker: local-markdown · Map query: plans/*.md`
 
 ## Labels
 
-There are no labels. The type lives in the Frontier table's Type column as J / R / E / T (judgment, research, experiment, task). Route items live only in the Route section, so they need no marker.
+There are no labels. The type lives in the Frontier table's Type column as J / R / E / T (judgment, research, experiment, task). Task rows append `[agent]` or `[human]` to the ticket name to declare their mode. Route items live only in the Route section; each carries its mode in the line as `[agent]` or `[human]`.
 
 ## Create the map
 

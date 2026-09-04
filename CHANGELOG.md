@@ -2,6 +2,28 @@
 
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows [SemVer](https://semver.org/).
 
+## [0.4.0] - 2026-09-04
+
+### Added
+
+- Ticket **mode**: judgment and experiment are HITL by type, research AFK by type; task and route tickets declare theirs with a second label, `ready-for-agent` or `ready-for-human`, so an unattended run can tell what it may take. Tracker references create the two mode labels and carry the convention (local markdown uses `[agent]` / `[human]` markers).
+- Phase 3 runs the breadth-first sweep as grilling-style **rounds** (numbered candidates, recommended answer with its weakness, one round per frontier); an answered candidate goes straight to the Decision log instead of becoming a ticket. Terms are sharpened into `CONTEXT.md` as they land; ADRs only when hard to reverse, surprising, and a real trade-off.
+- Phase 4 becomes spec → seams → tracer-bullet slices → quiz → publish, with the spec shape, slicing rules (prefactor first, expand → migrate → contract for wide refactors), and route item body in `references/route.md`. Route items carry Parent / What to build / Acceptance criteria / Blocked by / Seams / From decisions.
+- Bearings gains **Consult** (skills every session loads) and **Preferences**.
+- Resume handles deferred-only frontiers, stale `plans/` maps on a tracker workspace, and new scope brought to a live map.
+
+### Changed
+
+- The **work session** (formerly Phase 3b) moves to the companion skill **transit**, which claims one ticket, resolves it by label, records and ripples. Meridian charts and routes; it never resolves a non-research ticket. Description, Sessions, and NEVER rules updated to match.
+- Research findings are recorded per the tracker doc's Resolve and close; a finding that implies a decision becomes a judgment ticket, never a decision.
+- Phase 2 degraded mode: a missing divergence reference ends the session with the fog symptom recorded instead of running a condensed table inline.
+- Map sections and Phase 4 steps defer to the template and `references/route.md` rather than restating them.
+
+### Removed
+
+- The inline degraded-mode divergence table.
+- The `Execution` Bearings field (nothing consumed it).
+
 ## [0.3.0] - 2026-09-01
 
 ### Added

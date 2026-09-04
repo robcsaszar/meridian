@@ -1,7 +1,7 @@
 {
   "name": "robcsaszar-meridian",
-  "version": "0.3.0",
-  "description": "Plans a body of work from an idea, feature, bug, or open-ended brainstorm — diagnosing how clear the destination is, diverging honestly when the way is fogbound, then converging decision-by-decision into a durable plan with an executable route.",
+  "version": "0.4.0",
+  "description": "Plans a body of work from an idea, feature, bug, or open-ended brainstorm \u2014 diagnosing how clear the destination is, diverging honestly when the way is fogbound, then converging decision-by-decision into a durable plan with an executable route.",
   "author": {
     "name": "Rob Csaszar",
     "url": "https://nhg.design"
