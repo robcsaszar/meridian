@@ -1,0 +1,51 @@
+name: Lint
+
+# Source-consistency checks. Not the test seam -- the seam is the loaded
+# plugin, and these read source text the seam cannot observe.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  consistency:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Vocabulary and decoupling lint
+        run: bash scripts/lint-vocabulary.sh
+
+  plugin-structure:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate plugin manifest
+        run: |
+          set -euo pipefail
+          jq -e '.name == "rutter"' .claude-plugin/plugin.json > /dev/null
+          jq -e '.plugins[0].name == "rutter"' .claude-plugin/marketplace.json > /dev/null
+          p=$(jq -r '.version' .claude-plugin/plugin.json)
+          m=$(jq -r '.plugins[0].version' .claude-plugin/marketplace.json)
+          c=$(grep -m1 -oE '^## \[[0-9]+\.[0-9]+\.[0-9]+\]' CHANGELOG.md | tr -d '#[] ')
+          echo "plugin=$p marketplace=$m changelog=$c"
+          [ "$p" = "$m" ] && [ "$m" = "$c" ] || { echo "::error::version parity drift"; exit 1; }
+      - name: Every skill has frontmatter with a name and description
+        run: |
+          set -euo pipefail
+          rc=0
+          for f in skills/*/SKILL.md; do
+            head -1 "$f" | grep -qx -- '---' || { echo "::error file=$f::missing frontmatter"; rc=1; }
+            grep -qE '^name:' "$f" || { echo "::error file=$f::missing name"; rc=1; }
+            grep -qE '^description:' "$f" || { echo "::error file=$f::missing description"; rc=1; }
+          done
+          exit $rc
+      - name: bin/ scripts are executable and LF
+        run: |
+          set -euo pipefail
+          rc=0
+          for f in bin/*.sh; do
+            bash -n "$f" || { echo "::error file=$f::syntax error"; rc=1; }
+            grep -qU $'' "$f" && { echo "::error file=$f::CRLF line endings break the shebang on POSIX"; rc=1; }
+          done
+          exit $rc
