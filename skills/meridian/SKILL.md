@@ -1,11 +1,11 @@
 ---
 name: meridian
-description: "Plans a body of work into a durable decision map — a plans/ file by default, or a configured issue tracker — and a route of tracer-bullet tickets. Use whenever the user wants to plan something out — a feature or bug that needs scoping before code, an idea too vague to act on, a wish to brainstorm directions, or a feeling of being stuck in obvious ideas — even if they don't ask for a formal plan. Also use to chart a new map or, once its frontier is empty, to write its spec and route. Trigger phrases — plan this out, help planning, let's brainstorm, scope this, break this down, turn this idea into a plan, roadmap this, chart the route, to spec, to tickets. Don't use for working or implementing a ticket on an existing map (transit), naming or wording brainstorms, personal or event logistics, tasks the user mainly wants done now, a quick sketch of a small in-session change, auditing existing code (crucible), interrogating shipped work (socratic), or reviewing how the session was conducted (retrospective)."
+description: "Plans a body of work into a durable decision map — a plans/ file by default, or a configured issue tracker — and a route of tracer-bullet tickets. Use whenever the user wants to plan something out — a feature or bug that needs scoping before code, an idea too vague to act on, a wish to brainstorm directions, or a feeling of being stuck in obvious ideas — even if they don't ask for a formal plan. Also use to chart a new map or, once its frontier is empty, to write its spec and route. Trigger phrases — plan this out, help planning, let's brainstorm, scope this, break this down, turn this idea into a plan, roadmap this, chart the route, to spec, to tickets. Don't use for working or implementing a ticket on an existing map (transit) or sailing a whole map to done (convoy), naming or wording brainstorms, personal or event logistics, tasks the user mainly wants done now, a quick sketch of a small in-session change, auditing existing code (crucible), interrogating shipped work (socratic), or reviewing how the session was conducted (retrospective)."
 ---
 
 # Meridian
 
-The plan is the meridian — the fixed line the whole body of work steers by. Take bearings → diverge if fogbound → chart the frontier → chart the route. Tickets between those two are worked by **transit**, one crossing per run. The map lives where the team already works, and it outlives every session. Order of operations: resolve the workspace, resume if a map exists, then Phase 1.
+The plan is the meridian — the fixed line the whole body of work steers by. Take bearings → diverge if fogbound → chart the frontier → chart the route. Tickets between those two are worked elsewhere, never here. **The rule: one ticket goes to transit, a whole map goes to convoy.** transit makes one crossing per run and stops; convoy sails the whole route under one orchestrator, unattended. The map lives where the team already works, and it outlives every session. Order of operations: resolve the workspace, resume if a map exists, then Phase 1.
 
 ## The workspace
 
@@ -43,13 +43,13 @@ One map per effort. By default it is `plans/<slug>.md` from `assets/PLAN.templat
 
 ## Sessions
 
-Meridian runs two session kinds; the third belongs to transit.
+Meridian runs two session kinds; the third belongs to transit or convoy.
 
 - **Chart** — Phases 1–3: bearings, divergence if fogbound, breadth-first frontier, tickets created and wired, scouts fired. Resolves nothing but research.
 - **Route** — Phase 4: frontier empty; spec if demanded, seams, tracer-bullet slices, route tickets, first move.
-- **Work** — transit's: claim one ticket, resolve it by label, ripple, release. Never done here.
+- **Work** — not meridian's. One ticket → **transit**: claim it, resolve it by label, ripple, release. The whole route → **convoy**: waves of agents under one orchestrator that owns every gate and commit. Never done here, by either name.
 
-**Resume first.** Before creating a map, look for one — the tracker doc's map query *and* glob `plans/*.md`; a map found only in `plans/` on a tracker workspace is stale — ask whether to migrate or ignore it. If found, load the map body only (not every ticket), restate Destination and the current frontier in two lines, and pick the session kind from its state: open undeferred tickets → hand to transit; only deferred tickets (or none) and no Route → route session; Route present → hand to transit; the user brings new scope to a live map → run Phase 3 rounds on that branch only, create and wire its tickets, stop. Several plausible matches → list them and ask; never guess. A changed Destination marks the map superseded and starts a successor linking back.
+**Resume first.** Before creating a map, look for one — the tracker doc's map query *and* glob `plans/*.md`; a map found only in `plans/` on a tracker workspace is stale — ask whether to migrate or ignore it. If found, load the map body only (not every ticket), restate Destination and the current frontier in two lines, and pick the session kind from its state: open undeferred tickets → hand to transit, or to convoy if the user wants them all worked without stopping; only deferred tickets (or none) and no Route → route session; Route present → hand to transit for one item, convoy for the whole route; the user brings new scope to a live map → run Phase 3 rounds on that branch only, create and wire its tickets, stop. Several plausible matches → list them and ask; never guess. A changed Destination marks the map superseded and starts a successor linking back.
 
 ## Phase 1 — Take bearings
 
@@ -94,7 +94,7 @@ Precondition: no open, undeferred tickets. MANDATORY READ [`references/route.md`
 
 Then, per the reference and in this order: spec (only when Bearings demanded one or the Route exceeds a handful of items) → seams confirmed with the user → tracer-bullet slices → quiz → publish as `meridian:slice` items, each with `mode:agent` or `mode:human`. An item no decision demanded is scope creep — flag or cut it.
 
-Name the **first move** — the smallest route item that unblocks the most — mark the map route-ready, and stop. Implementation is transit's job.
+Name the **first move** — the smallest route item that unblocks the most — mark the map route-ready, and stop. Implementation belongs to transit (one item) or convoy (the whole map); say which fits and hand it over.
 
 Completion criterion: every log entry is reflected in a route item or explicitly needs no work; seams are confirmed; every item has acceptance criteria, a mode label, and wired blockers; the first move is named; nothing has been implemented.
 
@@ -114,7 +114,7 @@ Completion criterion: every log entry is reflected in a route item or explicitly
   **Why:** A tracker is shared. An unasked-for map item with five new labels is noise the whole team sees and someone has to clean up.
 
 - **NEVER resolve a non-research ticket in a chart or route session**
-  **Instead:** Create it, wire it, fire scouts on research; hand the rest to transit.
+  **Instead:** Create it, wire it, fire scouts on research; hand the rest to transit, or to convoy if the user wants the map worked end to end.
   **Why:** With the whole frontier in view, the pull to finish it turns charting into a monologue that decides on the user's behalf — one ticket per run is what keeps each answer honest.
 
 - **NEVER invent timelines or effort estimates**
@@ -126,5 +126,5 @@ Completion criterion: every log entry is reflected in a route item or explicitly
   **Why:** The map is the only state that survives the session; an agent writing it directly leaves the orchestrator unable to reconcile what the map claims with what was decided.
 
 - **NEVER start implementing route items on your own initiative**
-  **Instead:** Name the first move and stop; transit implements, and only from a ticket labelled for it.
+  **Instead:** Name the first move and stop; transit or convoy implements, and only from a ticket labelled for it.
   **Why:** Planning and doing in one sitting bends the route toward whatever is easiest to execute right now.
