@@ -1,7 +1,7 @@
 {
-  "name": "robcsaszar-meridian",
+  "name": "rutter",
   "version": "0.4.0",
-  "description": "Plans a body of work from an idea, feature, bug, or open-ended brainstorm \u2014 diagnosing how clear the destination is, diverging honestly when the way is fogbound, then converging decision-by-decision into a durable plan with an executable route.",
+  "description": "A plan-to-done pipeline in one plugin: meridian charts a body of work into a durable decision map and a route of tracer-bullet tickets, transit works one ticket at a time, and convoy sails a whole map to done under one orchestrator. Ships the agents they spawn and a single shared ticket vocabulary.",
   "author": {
     "name": "Rob Csaszar",
     "url": "https://nhg.design"
@@ -11,10 +11,11 @@
   "keywords": [
     "planning",
     "brainstorming",
-    "ideation",
     "decision-making",
     "work-breakdown",
     "issue-tracker",
+    "orchestration",
+    "subagents",
     "claude-code"
   ]
 }
