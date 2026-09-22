@@ -58,7 +58,7 @@ jobs:
           claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
           allowed_bots: "github-actions[bot]"
           prompt: |
-            Read `.claude/skills/transit/SKILL.md` and run exactly one transit in AFK mode.
+            Use the transit skill (from the rutter plugin) and run exactly one transit in AFK mode.
             The workspace is the `## Planning` section of CONTEXT.md, else AGENTS.md.
             Only tickets that pass every AFK gate are eligible; if none pass, stop without writing.
             TRANSIT_PR_CAP is ${{ vars.TRANSIT_PR_CAP || 2 }}.
