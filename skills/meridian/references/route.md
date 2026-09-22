@@ -32,7 +32,7 @@ Present the breakdown numbered — Title · Blocked by · What it delivers — a
 
 ## Route item body
 
-Published in dependency order, blockers first, as `plan:route` child items with `ready-for-agent`, or `ready-for-human` where the item needs manual testing, design judgment, or access an agent lacks.
+Published in dependency order, blockers first, as `meridian:slice` child items with `mode:agent`, or `mode:human` where the item needs manual testing, design judgment, or access an agent lacks.
 
 ```markdown
 ## Parent

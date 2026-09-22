@@ -20,7 +20,7 @@ A tracker named on rung 2 ends in a **confirm** before the first write, phrased 
 ```markdown
 ## Planning
 
-Tracker: github-issues · Map query: label plan:map
+Tracker: github-issues · Map query: label meridian:map
 ```
 
 For Jira, also record the project key, the map and ticket issue types, and the blocking link-type name.
@@ -29,22 +29,15 @@ As soon as the rung resolves — before any confirm, since reads such as the map
 
 ## The map
 
-One map per effort. By default it is `plans/<slug>.md` from `assets/PLAN.template.md`, tickets as rows in its Frontier table; on a tracker it is a single map item labelled `plan:map` with tickets as child items. Escalate to `plans/<slug>/` only when Bearings demand multiple documents (spec, PRD) — the map stays the index.
+One map per effort. By default it is `plans/<slug>.md` from `assets/PLAN.template.md`, tickets as rows in its Frontier table; on a tracker it is a single map item labelled `meridian:map` with tickets as child items. Escalate to `plans/<slug>/` only when Bearings demand multiple documents (spec, PRD) — the map stays the index.
 
 **Seven sections, always all,** in `assets/PLAN.template.md` order — Destination, Bearings, Decision log, Frontier, Fog, Ruled out, Route; the template says what each holds. On a tracker the Frontier section stays empty and is found by query.
 
 **The map is an index, not a store.** A decision lives in exactly one place — its ticket — and the map gists it and links. Refer to tickets by name, never bare number; a wall of `#42 #43` is illegible.
 
-**Tickets.** Each frontier decision is its own ticket, sized to one session, body headed `## Question`. Each carries exactly one type label:
+**Tickets.** Each frontier decision is its own ticket, sized to one session, body headed `## Question`, carrying exactly one type label and — for tasks and route items — one mode label declared at creation.
 
-| Label | Type | What unblocks it | Mode |
-|---|---|---|---|
-| `plan:judgment` | Judgment | Only the user can answer | HITL |
-| `plan:research` | Research | Evidence from the codebase or the world | AFK |
-| `plan:experiment` | Experiment | Talking cannot settle it; a throwaway prototype the user reacts to can | HITL |
-| `plan:task` | Task | Nothing to decide — work that must happen first (access, sample data, a signup) | declared |
-
-**Mode.** A HITL ticket resolves only through a live exchange with the user; an agent never stands in for the user's side of it. An AFK ticket an agent drives alone. Judgment and experiment are HITL by type, research AFK by type. Task and route tickets *declare* their mode with a second label at creation — `ready-for-agent` or `ready-for-human` — so an unattended run can tell what it may take. Tiebreaker: if the outcome *resolves* a decision it is an experiment; if it only *enables* one it is a task. Route items (Phase 4) carry `plan:route` so they never pollute the frontier query. If any `plan:` label already exists with a different meaning in the tracker, ask before reusing it.
+**MANDATORY READ** [`${CLAUDE_PLUGIN_ROOT}/references/vocabulary.md`](${CLAUDE_PLUGIN_ROOT}/references/vocabulary.md) before creating the first ticket. It is the single definition of every `meridian:` and `mode:` label, shared with transit and convoy, and it carries the HITL/AFK rule and the experiment-versus-task tiebreaker. Never restate it here and never infer a label's meaning from its name — a vocabulary that lives in two places drifts.
 
 **Blocking** uses the tracker's native dependency relation so the frontier is visible in its own UI; a **claim** is an assignee, set before any work. The **frontier** is the open, unblocked, unclaimed tickets.
 
@@ -91,7 +84,7 @@ Sweep the whole body of work breadth-first — scope, users, data, interfaces, s
 - The user confirms, merges, kills, or answers each candidate. A killed candidate → Ruled out with its reason. An **answered** candidate is not ticketed — it goes straight to the Decision log, Via J. What cannot yet be framed as a question → Fog, with what would clarify it; the test is whether the question can be *stated* precisely now, not answered. Do not pre-slice fog into tickets.
 - Sharpen terms as they surface (see Rules).
 
-Rounds end when the tree has no unvisited branch. Then create tickets, and wire blocking in a **second pass** — items need ids before they can reference each other. Claim every research ticket and fire a scout on each now; they run in parallel and report back as text. Record each finding per the tracker doc's *Resolve and close*; findings follow `.claude/skills/transit/references/dispatch.md` § plan:research (every claim cited and confidence-flagged) — if that file is absent, require a citation on every claim and mark uncited ones as speculation. A finding that implies a decision becomes a new judgment ticket, never a decision. Then stop: charting resolves nothing else.
+Rounds end when the tree has no unvisited branch. Then create tickets, and wire blocking in a **second pass** — items need ids before they can reference each other. Claim every research ticket and fire a scout on each now; they run in parallel and report back as text. Record each finding per the tracker doc's *Resolve and close*; findings follow `.claude/skills/transit/references/dispatch.md` § meridian:scout (every claim cited and confidence-flagged) — if that file is absent, require a citation on every claim and mark uncited ones as speculation. A finding that implies a decision becomes a new judgment ticket, never a decision. Then stop: charting resolves nothing else.
 
 Completion criterion: every candidate the rounds surfaced is a ticket, a log line, a Ruled out line, or a Fog line; blocking is wired; research scouts are fired; nothing else is resolved.
 
@@ -99,7 +92,7 @@ Completion criterion: every candidate the rounds surfaced is a ticket, a log lin
 
 Precondition: no open, undeferred tickets. MANDATORY READ [`references/route.md`](references/route.md) for the spec shape, seam rules, slicing rules, and route item body. Then, in order:
 
-Then, per the reference and in this order: spec (only when Bearings demanded one or the Route exceeds a handful of items) → seams confirmed with the user → tracer-bullet slices → quiz → publish as `plan:route` items, each with `ready-for-agent` or `ready-for-human`. An item no decision demanded is scope creep — flag or cut it.
+Then, per the reference and in this order: spec (only when Bearings demanded one or the Route exceeds a handful of items) → seams confirmed with the user → tracer-bullet slices → quiz → publish as `meridian:slice` items, each with `mode:agent` or `mode:human`. An item no decision demanded is scope creep — flag or cut it.
 
 Name the **first move** — the smallest route item that unblocks the most — mark the map route-ready, and stop. Implementation is transit's job.
 

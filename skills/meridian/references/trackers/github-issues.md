@@ -2,28 +2,28 @@
 
 Loaded when the workspace resolves to `github-issues`. All operations go through `gh`; confirm it is authenticated against this repo's remote before the first write (`gh auth status`). Sub-issues and issue dependencies are GitHub-native features — use them, and fall back to body conventions only where this repo's plan does not expose them.
 
-Persisted line: `Tracker: github-issues · Map query: label plan:map`
+Persisted line: `Tracker: github-issues · Map query: label meridian:map`
 
 ## Labels
 
 Ensure the six `plan:` labels and the two mode labels exist once per repo; create any that are missing.
 
 ```sh
-for l in plan:map plan:judgment plan:research plan:experiment plan:task plan:route; do
+for l in meridian:map meridian:decision meridian:scout meridian:prototype meridian:task meridian:slice; do
   gh label create "$l" --color 1D76DB --description "meridian planning" 2>/dev/null || true
 done
-gh label create ready-for-agent --color 0E8A16 --description "AFK — an agent may take it" 2>/dev/null || true
-gh label create ready-for-human --color D93F0B --description "HITL — needs a person" 2>/dev/null || true
+gh label create mode:agent --color 0E8A16 --description "AFK — an agent may take it" 2>/dev/null || true
+gh label create mode:human --color D93F0B --description "HITL — needs a person" 2>/dev/null || true
 ```
 
 If a `plan:` label already exists with a different description, stop and ask before reusing it.
 
 ## Create the map
 
-One issue, labelled `plan:map`, titled with the effort's name. Body is the seven-section map from `assets/PLAN.template.md` with the Frontier section reading only "open child issues — see query below". Frontier tickets are never listed in the map body.
+One issue, labelled `meridian:map`, titled with the effort's name. Body is the seven-section map from `assets/PLAN.template.md` with the Frontier section reading only "open child issues — see query below". Frontier tickets are never listed in the map body.
 
 ```sh
-gh issue create --label plan:map --title "<effort name>" --body-file map.md
+gh issue create --label meridian:map --title "<effort name>" --body-file map.md
 ```
 
 Record the returned number; every later operation references it.
@@ -33,13 +33,13 @@ Record the returned number; every later operation references it.
 A ticket is an issue with one type label and body `## Question` followed by the decision. Then attach it as a sub-issue of the map. The sub-issue API takes the issue's database id, not its number.
 
 ```sh
-gh issue create --label plan:judgment --title "<ticket name>" --body-file ticket.md
+gh issue create --label meridian:decision --title "<ticket name>" --body-file ticket.md
 MAP_NUM=<map number>; SUB_NUM=<new number>
 SUB_ID=$(gh api "repos/{owner}/{repo}/issues/$SUB_NUM" --jq .id)
 gh api -X POST "repos/{owner}/{repo}/issues/$MAP_NUM/sub_issues" -F sub_issue_id="$SUB_ID"
 ```
 
-Route items (Phase 4) are created the same way with `plan:route` **plus a mode label** — `ready-for-agent` or `ready-for-human` — so an unattended transit run can tell what it may take. Task tickets carry the same pair. Route item body: `references/route.md` § Route item body.
+Route items (Phase 4) are created the same way with `meridian:slice` **plus a mode label** — `mode:agent` or `mode:human` — so an unattended transit run can tell what it may take. Task tickets carry the same pair. Route item body: `references/route.md` § Route item body.
 
 Route items are closed by the pull request that ships them (`Closes #<n>` in its body), never by hand; the map's Route checkbox is ticked once the item is closed.
 
@@ -67,7 +67,7 @@ gh issue edit <number> --add-assignee @me
 Open, unassigned children of the map, then drop any with an open blocker.
 
 ```sh
-gh issue list --search "is:open no:assignee label:plan:judgment,plan:research,plan:experiment,plan:task" --json number,title,labels
+gh issue list --search "is:open no:assignee label:meridian:decision,meridian:scout,meridian:prototype,meridian:task" --json number,title,labels
 # for each: gh api "repos/{owner}/{repo}/issues/<number>/dependencies/blocked_by" --jq '[.[] | select(.state=="open")] | length'
 ```
 

@@ -14,15 +14,15 @@ If any field is missing, ask for it before the first write — a wrong issue typ
 
 ## Labels
 
-Jira labels cannot contain spaces; most instances accept colons. Try `plan:map` and the five siblings first. If the instance rejects the colon, use `plan-map`, `plan-judgment`, `plan-research`, `plan-experiment`, `plan-task`, `plan-route` and append `· Label style: dash` to the persisted line so later sessions do not retry. If a `plan` label already exists with a different meaning in the project, ask before reusing it.
+Jira labels cannot contain spaces; most instances accept colons. Try `meridian:map` and the five siblings first. If the instance rejects the colon, use `plan-map`, `plan-judgment`, `plan-research`, `plan-experiment`, `plan-task`, `plan-route` and append `· Label style: dash` to the persisted line so later sessions do not retry. If a `plan` label already exists with a different meaning in the project, ask before reusing it.
 
 ## Create the map
 
-One issue of **Map type** in **Project**, labelled `plan:map`, summary = the effort's name, description = the seven-section map with the Frontier section reading "open child issues — see query". Record its key.
+One issue of **Map type** in **Project**, labelled `meridian:map`, summary = the effort's name, description = the seven-section map with the Frontier section reading "open child issues — see query". Record its key.
 
 ## Create a ticket
 
-One issue of **Ticket type** with a single type label, summary = the ticket's name, description = `## Question` plus the decision. Set its parent to the map (the parent field, or the epic link on older instances — whichever the hierarchy uses). Route items use `plan:route` plus a mode label, `ready-for-agent` or `ready-for-human` (dash style if the instance rejects colons); task tickets carry the same pair.
+One issue of **Ticket type** with a single type label, summary = the ticket's name, description = `## Question` plus the decision. Set its parent to the map (the parent field, or the epic link on older instances — whichever the hierarchy uses). Route items use `meridian:slice` plus a mode label, `mode:agent` or `mode:human` (dash style if the instance rejects colons); task tickets carry the same pair.
 
 ## Wire blocking
 
@@ -38,7 +38,7 @@ JQL for the candidates, then drop any with an open blocker:
 
 ```text
 project = ABC AND parent = <map key> AND statusCategory != Done AND assignee IS EMPTY
-  AND labels IN (plan:judgment, plan:research, plan:experiment, plan:task)
+  AND labels IN (meridian:decision, meridian:scout, meridian:prototype, meridian:task)
 ```
 
 For each candidate, inspect its inward **Blocking link** issues; keep the ticket only if none are open. With the description fallback, parse the `Blocked by:` line instead.
