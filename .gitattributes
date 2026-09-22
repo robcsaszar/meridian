@@ -1,0 +1,4 @@
+# Shell scripts must stay LF: a CRLF shebang is "bad interpreter" on POSIX,
+# and bin/ ships to whatever machine installs the plugin.
+*.sh text eol=lf
+bin/** text eol=lf
