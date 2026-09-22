@@ -1,0 +1,71 @@
+{
+  "note": "Origin fingerprints taken when each file was vendored. Direction of travel is origin -> plugin: the origin project is where these are battle-tested, and changes there are ported here. This manifest does NOT assert the two files are identical - the vendored copies are deliberately namespaced and decoupled. It answers one question: has the origin moved since we vendored?",
+  "origin_default": "X:/Dev/orakl/.claude",
+  "vendored_at": "2026-09-23",
+  "files": {
+    "agents/auditor.md": {
+      "origin": "agents/auditor.md",
+      "origin_sha256": "e340f7842ddbe3b50d7caaee6d9a9ea06678bfefe260a3219baadc89b7b8f577"
+    },
+    "agents/builder.md": {
+      "origin": "agents/builder.md",
+      "origin_sha256": "00bac1b2db7aa701583f6c5ff89ea4d64512c3173ed229ab36093e130a333573"
+    },
+    "agents/drill.md": {
+      "origin": "agents/drill.md",
+      "origin_sha256": "eee9c335b72439b7e3bb474a093c0c3f34f64e81e50bf203dc1f0d89ac7037ba"
+    },
+    "agents/reviewer.md": {
+      "origin": "agents/reviewer.md",
+      "origin_sha256": "688230224229e4d00218b98c7422137853a9670af76b607df7383c182b9075ab"
+    },
+    "agents/scout.md": {
+      "origin": "agents/scout.md",
+      "origin_sha256": "40a4ce27f3780a737a5776f8f623af9aea4b2be69117d10fb87c7d0311746fcf"
+    },
+    "agents/sweeper.md": {
+      "origin": "agents/sweeper.md",
+      "origin_sha256": "f4ab99c9a7acf13a1e0e703e35f45f70692a7183ec31ee39234c4d49edc14094"
+    },
+    "bin/guard-agent.sh": {
+      "origin": "skills/convoy/scripts/guard-agent.sh",
+      "origin_sha256": "5f1d1860c22553c4c42d0cf6aec4b705bad6bbe2d075240fb0a36d127d4ce93d"
+    },
+    "skills/convoy/SKILL.md": {
+      "origin": "skills/convoy/SKILL.md",
+      "origin_sha256": "39849e70f54492a09cde5f09df11ebd2012bad5d02947c638d0076e18e51067a"
+    },
+    "skills/convoy/references/briefs.md": {
+      "origin": "skills/convoy/references/briefs.md",
+      "origin_sha256": "8263aa50bde7b74fa4811503aa880b5cee0f62dd679a7e5fa030089f460f189c"
+    },
+    "skills/convoy/references/closeout.md": {
+      "origin": "skills/convoy/references/closeout.md",
+      "origin_sha256": "4eb8b472f98573502b5f9ced67450e1e9fef8dd935e173b4b51d8ab0a672fcb7"
+    },
+    "skills/convoy/references/gate.md": {
+      "origin": "skills/convoy/references/gate.md",
+      "origin_sha256": "21930f425e3ffaee5f60b3ed1fcdaa81d46134f3452f81501f6f8edc7fa7c42d"
+    },
+    "skills/convoy/references/ownership.md": {
+      "origin": "skills/convoy/references/ownership.md",
+      "origin_sha256": "e2648de2cacea5e3e2e55c45d83f8eaa379713510fe37ae29743f32e87b618f4"
+    },
+    "skills/meridian/SKILL.md": {
+      "origin": "skills/meridian/SKILL.md",
+      "origin_sha256": "1183ed61dccb98d3a83ef85df3754ffed41f233630faacab9bd7b9bb8227ab9c"
+    },
+    "skills/transit/SKILL.md": {
+      "origin": "skills/transit/SKILL.md",
+      "origin_sha256": "19a31730603928e387e73e8ec6727959957b894c55fcd3496164994d503d90e4"
+    },
+    "skills/transit/assets/transit-run.yml": {
+      "origin": "skills/transit/assets/transit-run.yml",
+      "origin_sha256": "1cfbe0d86470a681f420e29da193d40909c7a92abaffdecf5ba6b7e4db291f64"
+    },
+    "skills/transit/references/dispatch.md": {
+      "origin": "skills/transit/references/dispatch.md",
+      "origin_sha256": "4db481836a080eb2a5476b50c9f172061134ced49ba20e53cb8a25dd1e645390"
+    }
+  }
+}

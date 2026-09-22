@@ -45,3 +45,19 @@ Afterwards, confirm the release exists and its notes match the changelog block.
 NEVER:
 - Never push a tag or create a release outside the workflow. A hand-made tag makes the workflow refuse that version, and a hand-written release skips the changelog and version checks.
 - Never work around a failed run by hand-writing notes or skipping a check. Fix the changelog or the manifests, merge, and re-run.
+
+## Drift check
+
+These skills and agents were vendored from a separate origin project, which is
+where they are battle-tested. The two copies are kept separate on purpose, and
+the direction of travel is **origin -> plugin**.
+
+```bash
+RUTTER_ORIGIN=/path/to/origin/.claude python3 scripts/check-drift.py
+python3 scripts/check-drift.py --update   # after porting, re-fingerprint
+```
+
+It does not compare the two copies to each other -- the vendored ones are
+deliberately namespaced and decoupled. It answers one question: has the origin
+moved since we vendored? Exits 0 and skips when the origin is not on this
+machine, so a clone without it is not broken.
