@@ -24,7 +24,7 @@ Every uncommitted file has exactly one owner — user, orchestrator, wave-hub, o
 
 ## Phase 0 — Bearings
 
-Resolve the map from the argument; none or several match → list them and stop. Load the map body. Read the repo's delegation guidance if it has one — a `## Delegation` section in `AGENTS.md` or `CONTEXT.md`, or a file they point to; without one, `references/briefs.md` carries the whole briefing standard. Confirm the branch is `main`, otherwise stop — a convoy commits on the default branch only, because the trailers below close tickets on push and a push from a feature branch would tick items whose tickets stay open. Run `pnpm lint 2>&1 | tail -3` and record the `Found N warnings` count as the baseline.
+Resolve the map from the argument; none or several match → list them and stop. Load the map body. Read the repo's delegation guidance if it has one — a `## Delegation` section in `AGENTS.md` or `CONTEXT.md`, or a file they point to; without one, `references/briefs.md` carries the whole briefing standard. Confirm the branch is `main`, otherwise stop — a convoy commits on the default branch only, because the trailers below close tickets on push and a push from a feature branch would tick items whose tickets stay open. Resolve the repo's commands per `${CLAUDE_PLUGIN_ROOT}/references/commands.md` and record them for every brief this run. Run the *lint* command and record its warning count as the baseline; no lint command → record that there is no lint baseline, and never report a later run as clean on its strength.
 
 Snapshot `git status --porcelain` — the user's paths. Reconcile every open route item: `git log --grep "Closes #<n>\b"`; on a hit, `git merge-base --is-ancestor <sha> origin/main` — true means the user reopened it, so it is work; false means **committed, unpushed**, so it is done.
 
@@ -106,7 +106,7 @@ After the audit: drive every rendered surface and attach a capture or file a `mo
 
 - **NEVER let an agent run the full suite before reporting**
   **Instead:** Brief it to run only the tests it touched, then report; the orchestrator gates.
-  **Why:** An agent that backgrounds `pnpm test` stops with "waiting for the test run" and needs a ping every time. The suite runs once, at the gate, not once per agent.
+  **Why:** An agent that backgrounds the full test command stops with "waiting for the test run" and needs a ping every time. The suite runs once, at the gate, not once per agent.
 
 - **NEVER call a map shipped before its rendered surfaces have been seen**
   **Instead:** Phase 5b — a capture on each rendered item's ticket, or a visual-check ticket for a person; the shipped line comes after.

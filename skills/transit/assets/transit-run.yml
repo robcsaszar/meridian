@@ -43,10 +43,14 @@ jobs:
       - uses: pnpm/action-setup@v5
         with:
           version: 10
-      - uses: actions/setup-node@v6
-        with:
-          node-version: 24
-      - run: pnpm install --frozen-lockfile
+      # --- Toolchain setup: replace with your project's own ---
+      # This template ships toolchain-agnostic. Add the setup and dependency
+      # install your repo needs, e.g.:
+      #   - uses: actions/setup-node@v6
+      #     with: { node-version: 24 }
+      #   - run: pnpm install --frozen-lockfile
+      # or setup-python + pip install, setup-go, actions-rs, make deps, ...
+      # If your repo needs no install step, delete this block.
       - uses: anthropics/claude-code-action@v1
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

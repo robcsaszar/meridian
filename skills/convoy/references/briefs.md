@@ -48,7 +48,7 @@ For a route item whose work is removal — the contract half of an expand-then-c
 ```text
 This is a DELETION task. The replacement already shipped in <commit> — read it first.
 
-Work by deletion, then follow the type errors — `pnpm typecheck` finds the orphans.
+Work by deletion, then follow the type errors — the repo's *typecheck* command finds the orphans.
 After deleting, grep `src/` and `tests/` for <every symbol being removed> and account
 for EVERY remaining hit: it either belongs to <the surviving path> or it should be gone.
 

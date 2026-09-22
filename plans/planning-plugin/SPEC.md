@@ -54,4 +54,4 @@ Source-level consistency — one label vocabulary, no build-tool assumptions, no
 
 ## Further notes
 
-The appetite bounds this at vocabulary unification and the plugin skeleton. Decoupling from one project's build tooling is sequenced after that and is not required for the package to compose correctly — but until it lands, "installable in any repository" is an aspiration the package does not yet meet, and the release notes must not claim otherwise.
+The appetite bounds this at vocabulary unification and the plugin skeleton. Decoupling from one project's build tooling landed in route item 7: nothing in `skills/` or `agents/` names a package manager, and a probe in a Makefile-only Go repo resolved that repo's commands and reported the absent one as absent. Two couplings still block the full claim — route item 14 (the audit agent hard-requires a skill this plugin does not ship) and route item 15 (convoy's spawn guard probably never registers from a plugin). Until both close, "installable in any repository" is true of the build tooling but not of the package, and the release notes must not claim otherwise.
