@@ -1,0 +1,233 @@
+{
+  "schemaVersion": 1,
+  "claudeVersion": "2.1.280",
+  "startedAt": "2026-09-22T21:23:51.816Z",
+  "durationSeconds": 194,
+  "costUsd": 0.7696634,
+  "partial": false,
+  "suite": {
+    "root": "X:\\Dev\\skills\\meridian",
+    "ablation": "with-without",
+    "caseFilter": "fogbound-map-checkpoint",
+    "threshold": 1,
+    "concurrency": 1,
+    "plugins": [
+      {
+        "name": "rutter",
+        "version": "0.4.0",
+        "path": "X:\\Dev\\skills\\meridian"
+      }
+    ]
+  },
+  "cases": [
+    {
+      "name": "fogbound-map-checkpoint",
+      "dir": "evals\\meridian\\fogbound-map-checkpoint",
+      "source": "prose",
+      "promptMarkdown": "I want to plan out per-device session revocation, but I honestly don't know what the right shape is — sessions, devices, tokens, it's all mushed together in my head. Chart it.",
+      "runsPerCase": 3,
+      "timeoutSeconds": 300,
+      "maxTurns": 12,
+      "graders": [
+        {
+          "name": "criteria",
+          "type": "llm",
+          "weight": 1,
+          "graderMarkdown": "A successful response to this meridian task satisfies every point below. Judge only what the response actually says; absence of a required element is a failure, and a plausible-sounding substitute for a required element is also a failure.\r\n\r\n- Output records a map with Bearings filled and a named fog symptom, not a fabricated Destination\r\n- Output ends with the (a)ccept / (k)eep grilling prompt\r\n- Output does not run a Phase 2 divergence move before the prompt is answered\r\n- Output does not instruct the user to re-invoke /meridian",
+          "config": {
+            "criteria": "A successful response to this meridian task satisfies every point below. Judge only what the response actually says; absence of a required element is a failure, and a plausible-sounding substitute for a required element is also a failure.\r\n\r\n- Output records a map with Bearings filled and a named fog symptom, not a fabricated Destination\r\n- Output ends with the (a)ccept / (k)eep grilling prompt\r\n- Output does not run a Phase 2 divergence move before the prompt is answered\r\n- Output does not instruct the user to re-invoke /meridian",
+            "focus": "last_message"
+          }
+        }
+      ],
+      "arms": {
+        "with": [
+          {
+            "score": 0,
+            "passed": false,
+            "turns": 7,
+            "costUsd": 0.18461980000000003,
+            "judgeCostUsd": 0.004252,
+            "durationSeconds": 39,
+            "startedAt": "2026-09-22T21:23:51.903Z",
+            "error": null,
+            "tracePath": "C:\\Users\\rob\\AppData\\Local\\Temp\\claude-eval-mQO60o\\out\\trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "criteria",
+                "passed": false,
+                "weight": 1,
+                "explanation": "judge votes: FAIL FAIL FAIL",
+                "withOnly": false,
+                "scored": true,
+                "judgeVotes": [
+                  false,
+                  false,
+                  false
+                ],
+                "evidence": "Before planning, here's how the three pieces fit together. Most of the confusion goes away once each one has a single job.\n\n## The mental model\n\n```\nUser\n └── Credential (password, passkey, SSO)       proves who you are, once, at sign-in\n      └── Session  ← the thing you revoke       one server-side record per sign-in\n           ├── Device label                     \"Chrome on Rob's MacBook\" is display text, not a trusted identity\n           └── Tokens                           what the client carries to show it holds the session\n                ├── Refresh token / session cookie   long-lived, checked against the session record\n                └── Access token (e.g. a JWT)        short-lived, often never checked with the server\n```\n\n- **\"Per-device revocation\" usually means per-session revocation, with the device shown as a label.** One laptop running two browsers has two sessions, and \"device\" can't be trusted anyway because the client reports it. So the session is what you delete, and the device name is what you show the user.\n- **Tokens are how revocation becomes slow.** Deleting a session record stops the refresh token or cookie right away. An access token the server never checks keeps working until it expires. That gap is the main design decision here.\n\n## Candidate Destination (unsigned)\n\n> *A signed-in user can see their active sign-ins, each labelled by device, and end any one of them. That sign-in stops working within an agreed time limit, and every other sign-in keeps working.*\n\nIf that's not what you mean, say what's wrong with it. Pinning that down is part of the planning.\n\n## Two questions before I chart the rest\n\n1. **What does auth look like today?** This directory is empty: no code, no `CONTEXT.md`, no existing plans. Are you using server-side sessions, JWTs with refresh tokens, or a provider like Auth0, Clerk or Supabase? Where does that code live? Your answer settles several of the questions below, so I'd rather look it up than guess.\n2. **Appetite:** is this a small \"sign out other devices\" feature, or a full security surface (a device list, per-session revocation, possibly alerts when a new device signs in)?\n\n## What comes next (preview, not tickets yet)\n\nOnce you sign off on the Destination, the questions I'll put to you in rounds look roughly like this:\n\n- **What gets revoked:** session (my recommendation) or device. *Weakness of my pick:* \"device\" is what users expect to see, so the UI has to translate.\n- **How fast revocation must take effect,** which drives:\n  - **Token model:** check with the server on every request, or short-lived access tokens plus a revocation list. *Trade-off:* extra lookups on every request versus a window where a revoked session still works.\n- **What goes on each session record:** device label, IP address, last-seen time, and how accurate and private those need to be.\n- **Edge cases:** revoking your current session, \"sign out all others,\" a password change forcing everyone out, and whether other sessions get notified.\n\n**One problem:** this session can't write files, so the plan document (`plans/per-device-session-revocation.md`) doesn't exist yet. Answer the two questions and I'll give you the full document to paste in. Or rerun this where file writes are allowed and I'll create it directly."
+              }
+            ]
+          },
+          {
+            "score": 0,
+            "passed": false,
+            "turns": 6,
+            "costUsd": 0.15298499999999998,
+            "judgeCostUsd": 0.003085,
+            "durationSeconds": 32,
+            "startedAt": "2026-09-22T21:24:31.221Z",
+            "error": null,
+            "tracePath": "C:\\Users\\rob\\AppData\\Local\\Temp\\claude-eval-3AjVx6\\out\\trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "criteria",
+                "passed": false,
+                "weight": 1,
+                "explanation": "judge votes: FAIL FAIL FAIL",
+                "withOnly": false,
+                "scored": true,
+                "judgeVotes": [
+                  false,
+                  false,
+                  false
+                ],
+                "evidence": "Before I write the map I need your sign-off on the destination and two facts. One problem up front: this working directory is empty (no files, no commits), so I can't look at your auth code.\n\n## A first pass at separating the three terms\n\nThese are only candidate definitions. Whether they hold is the first thing the map will settle.\n\n| Term | Candidate meaning | Lifetime | Is it what gets revoked? |\n|---|---|---|---|\n| **Session** | One sign-in: a server-side record created at login (\"user X, signed in at T, from client Y\") | Until logout, expiry, or revocation | **Yes.** This is what you revoke. |\n| **Token** | A credential that proves a session exists (refresh token, access token, cookie). It points at a session. | Short (access) or rolling (refresh) | No. Revoking the session makes its tokens invalid. |\n| **Device** | What the user sees in a \"Signed-in devices\" list, like \"Chrome on MacBook\". Often it's just a label on a session. | Depends on the model | It depends, and that's the real open question. |\n\nThe idea underneath: **you revoke sessions, tokens get checked against sessions, and \"device\" is presentation until proven otherwise.** Most of the confusion comes from treating these as three things at the same level. Whether a device needs to be its own entity (for example \"remember this device\", or several sessions per device) is a decision the map will make, not an assumption I'm starting from.\n\n## Candidate destination\n\n> A signed-in user can see each device or session that has access to their account and revoke any one of them, which cuts off that device within a bounded time without signing out the others.\n\nWould you sign that? If not, tell me what's wrong with it, even roughly.\n\n## Two questions\n\n1. **Where's the code, and what does auth run on today?** Give me the repo path, or tell me if this is a new build. It also matters whether you use JWTs with refresh tokens, server-side sessions, or a provider like Auth0 or Clerk. That decides a lot of what follows.\n2. **Appetite:** how much time are you willing to spend on this? That's a limit you set, not an estimate from me.\n\nOnce you answer, I'll create `plans/per-device-session-revocation.md`. I'll then walk you through the decisions in rounds, starting with whether a device is its own entity, how quickly a revoke has to take effect, and what the revoked device sees."
+              }
+            ]
+          },
+          {
+            "score": 0,
+            "passed": false,
+            "turns": 7,
+            "costUsd": 0.17612640000000002,
+            "judgeCostUsd": 0.004418999999999999,
+            "durationSeconds": 37,
+            "startedAt": "2026-09-22T21:25:03.401Z",
+            "error": null,
+            "tracePath": "C:\\Users\\rob\\AppData\\Local\\Temp\\claude-eval-ownyWO\\out\\trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "criteria",
+                "passed": false,
+                "weight": 1,
+                "explanation": "judge votes: FAIL FAIL FAIL",
+                "withOnly": false,
+                "scored": true,
+                "judgeVotes": [
+                  false,
+                  false,
+                  false
+                ],
+                "evidence": "The repo I'm in is empty: no code, no `CONTEXT.md`, and no existing plans. So there's no map to resume and nothing to look up yet. The map will go in `plans/per-device-revocation.md` once you sign off on where we're headed. First, here are the three terms separated out, since that's most of the confusion:\n\n## The three things, pulled apart\n\n```\nDevice   ──has 1..n──▶   Session   ──issues──▶   Tokens\n(what the user sees)     (what you revoke)      (how revoking takes effect)\n```\n\n- **Session**: the server-side record of one sign-in. It has an id, a user, a created time, a last-seen time and a `revoked_at`. **This is what you actually revoke.** Everything else hangs off it.\n- **Device**: what the user recognises in a list (\"Chrome on MacBook\", \"Rob's iPhone\"). It's either:\n  - a **label on the session**, so one session shows as one row, or\n  - a **separate record in its own right**, with a persistent device id, so several sessions from the same phone show as one row.\n\n  Which one you pick is the main decision in this plan.\n- **Tokens**: what the client carries to prove it has a session. Usually there are two:\n  - **Refresh token**: long-lived, stored hashed, tied to the session. Revoking the session kills it right away.\n  - **Access token**: short-lived and often a stateless JWT. It keeps working until it expires unless every request checks the session. How quickly revocation takes effect depends on this.\n\nSo \"sign out that device\" really means: mark that device's session(s) revoked, reject their refresh tokens, and let access tokens die within some window you choose.\n\n## Where we're headed (draft)\n\n> A signed-in user can see a list of their active devices and sign out any single one. That device loses access within an agreed window, and the others stay signed in.\n\nAccept it or change it. If it's wrong but you can't say how, that's fine too. We'll explore options before we lock in a direction.\n\n## Two questions before I write the map\n\n1. **Where does the auth code live, and what's it built on?** This directory is empty, so I can't check how sessions and tokens work today. Point me at the repo, or tell me the stack: JWT or opaque tokens, whether refresh tokens exist, and whether there's a sessions table.\n2. **How much effort is this worth to you?** For example, a small feature on the account page or a proper rework of the session model. I'll record your answer; I won't assume one.\n\nOnce I have those, I'll go through the open decisions in batches, each with my recommended answer and its main weakness. Here are the ones I expect:\n- Is a device a label on the session or its own record?\n- How long can a revoked device keep working?\n- Should refresh tokens be rotated, with detection when an old one is reused?\n- How do we handle signing out the device you're currently on?\n- Can admins revoke too, or only the user?"
+              }
+            ]
+          }
+        ],
+        "without": [
+          {
+            "score": 0,
+            "passed": false,
+            "turns": 2,
+            "costUsd": 0.0780218,
+            "judgeCostUsd": 0.004253,
+            "durationSeconds": 24,
+            "startedAt": "2026-09-22T21:25:40.691Z",
+            "error": null,
+            "tracePath": "C:\\Users\\rob\\AppData\\Local\\Temp\\claude-eval-FOg2Ef\\out\\trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "criteria",
+                "passed": false,
+                "weight": 1,
+                "explanation": "judge votes: FAIL FAIL FAIL",
+                "withOnly": false,
+                "scored": true,
+                "judgeVotes": [
+                  false,
+                  false,
+                  false
+                ],
+                "evidence": "The repo is empty, so this is a general model you can adapt, not something drawn from your code.\n\n## The three concepts, separated\n\n```\nUSER ─────────┐\n  1           │ has many\n              ▼\n          DEVICE  (a physical browser/app install: \"Rob's iPhone / Safari\")\n  1           │  stable ID stored on the client, survives logouts\n              │ has many (usually one active at a time)\n              ▼\n          SESSION (one login: \"signed in at 09:14 via password+TOTP\")\n  1           │  server-side row, the thing you revoke\n              │ issues many\n              ▼\n          TOKENS  (short-lived credentials that *prove* the session)\n              ├── refresh token  (long-lived, rotated, 1 active per session)\n              └── access token   (5–15 min, stateless JWT or opaque)\n```\n\n**In one line each:**\n- **Device** answers *where*. It's what the user sees in the \"Your devices\" list.\n- **Session** answers *which login*. It's the unit you revoke.\n- **Token** answers *what gets sent with this request*. Tokens are disposable, and revoking one shouldn't be how you revoke access.\n\n## What revocation hits\n\n```\n User action                     Server does                        Effect\n ─────────────────────────────────────────────────────────────────────────────\n \"Sign out this device\"   ──►  session.revoked_at = now()   ──►  refresh fails\n                               (all sessions WHERE device_id=X)   access dies ≤ TTL\n \"Sign out everywhere\"    ──►  all sessions WHERE user_id=U  ──►  same, every device\n \"Forget this device\"     ──►  revoke sessions + delete device ─► next login = \"new device\"\n Password change          ──►  revoke all except current         (common default)\n```\n\n## Request-time check\n\n```\nrequest ──► access token valid & unexpired? ──no──► 401 → client uses refresh token\n                    │yes\n                    ▼\n        need instant revocation? ──no──► ALLOW   (revocation lag = access TTL)\n                    │yes\n                    ▼\n        session_id in revoked-cache? ──yes──► 401\n                    │no\n                    ▼\n                  ALLOW\n\nrefresh ──► lookup session by refresh-token hash\n              ├─ session revoked        → 401, client logs out\n              ├─ token already rotated  → REUSE DETECTED → revoke whole session\n              └─ ok → rotate: new refresh + new access (same session_id)\n```\n\n## Minimal schema\n\n```\ndevices   (id, user_id, label, user_agent, first_seen, last_seen)\nsessions  (id, user_id, device_id, created_at, last_used_at,\n           revoked_at, revoked_reason, ip, auth_method)\nrefresh_tokens (id, session_id, token_hash, issued_at, replaced_by, expires_at)\n```\n\nThe access token carries `sub=user_id` and `sid=session_id`, and nothing else is stateful.\n\n## Decisions you need to make\n\n1. **Is a device a real table or just a label on the session?** If users only ever see \"active sessions\", you can skip the `devices` table and store the UA and IP on the session. Add the table when you want device-level trust, like \"remember this device, skip MFA\".\n2. **How fast must revocation take effect?** You can wait out the access-token TTL, which is simple and gives a 5–15 min lag. Or you can check a revoked-`sid` denylist on every request (Redis, with entries expiring after the access TTL), which is instant but costs a lookup per request. My recommendation is to start with a short TTL and add the denylist only if the lag matters.\n3. **Should \"sign out everywhere\" keep the current session?** It usually should.\n\nIf you tell me your stack and whether you already use JWTs, cookies or both, I can turn this into a concrete implementation plan."
+              }
+            ]
+          },
+          {
+            "score": 0,
+            "passed": false,
+            "turns": 2,
+            "costUsd": 0.0942512,
+            "judgeCostUsd": 0.005010999999999998,
+            "durationSeconds": 32,
+            "startedAt": "2026-09-22T21:26:04.958Z",
+            "error": null,
+            "tracePath": "C:\\Users\\rob\\AppData\\Local\\Temp\\claude-eval-QN7JJW\\out\\trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "criteria",
+                "passed": false,
+                "weight": 1,
+                "explanation": "judge votes: FAIL FAIL FAIL",
+                "withOnly": false,
+                "scored": true,
+                "judgeVotes": [
+                  false,
+                  false,
+                  false
+                ],
+                "evidence": "The repo is empty, so this is a conceptual chart rather than one built from your code.\n\n## The four things, and how they nest\n\n```\n User ─────────── who you are\n  │ 1\n  │\n  │ *\n Device ───────── where you're logged in from (a laptop's Chrome, the iOS app on a phone)\n  │ 1              label + grouping. NOT a security boundary.\n  │\n  │ *   (usually just 1 active at a time)\n Session ──────── one login. This is the thing you revoke.\n  │ 1              starts at login, ends at logout / revoke / expiry\n  │\n  │ *\n Refresh token ── the long-lived credential that proves the session is still alive\n  │                rotated on every use; the whole chain is one \"family\"\n  │ mints\n  ▼\n Access token ─── short-lived (5–15 min), stateless, carries `sid` (the session ID)\n                   never revoked one by one; it just expires\n```\n\n**The main idea:** tokens are credentials, sessions are state, and devices are labels. You revoke state. Tokens stop working because the state behind them is gone.\n\n## What each one holds\n\n| Entity | Key fields | Lives where | Lifetime |\n|---|---|---|---|\n| **Device** | `id`, `user_id`, `name` (\"Rob's MacBook\"), `platform`, `user_agent`, `first_seen`, `last_seen` | DB, plus a device ID stored on the client (cookie or keychain) | Until the user removes it |\n| **Session** | `id`, `user_id`, `device_id`, `created_at`, `last_used_at`, `expires_at`, `revoked_at`, `ip` | DB | Days to weeks |\n| **Refresh token** | `hash`, `session_id`, `parent_hash`, `used_at` | DB (hashed only) | Until rotated |\n| **Access token** | `sub`, `sid`, `exp` | Client only (JWT) | Minutes |\n\n## What the revoke operations do\n\n```\n\"Sign out this device\"   → UPDATE sessions SET revoked_at=now() WHERE device_id=?\n\"Sign out this session\"  → UPDATE sessions SET revoked_at=now() WHERE id=?\n\"Sign out everywhere\"    → UPDATE sessions SET revoked_at=now() WHERE user_id=?\n\"Sign out all but this\"  → ... WHERE user_id=? AND id != current_sid\nPassword change          → sign out everywhere (optionally keep the current session)\nRefresh token reused     → revoke that session (a reused token probably means it was stolen)\n```\n\n## After a revoke, when does the device actually get kicked out?\n\n```\nrevoke ──► next refresh attempt fails ──► client logged out\n             ▲\n             └─ gap = remaining access token TTL (up to 15 min)\n```\n\nTwo ways to handle that gap. I'd start with the first:\n\n1. **Accept the gap.** Keep access tokens short (5–10 min). No per-request DB check. This is how most apps work.\n2. **Close the gap.** Keep a `revoked_sid` set in Redis with a TTL equal to the access token TTL, and check it on each request. This is cheap. Add it only if \"revoke\" has to mean \"right now\" (admin kill switch, compliance).\n\n## Should Device be its own table?\n\nThis is the question most likely behind the mushiness. Here's how to decide:\n\n- **Merge Device into Session** (just put `device_name`, `user_agent` and `platform` on the session row) if all you need is a \"your active sessions\" list with revoke buttons. Each login is one row. It's simpler, and it's what GitHub-style session lists show.\n- **Keep Device separate** if something about a device has to outlast a single login:\n  - \"Trust this device, skip 2FA for 30 days\"\n  - Push notification tokens\n  - \"New device sign-in\" alerts, which need to know you've seen this device before\n  - Blocking one device permanently\n\n**My recommendation:** start with sessions only, with the device fields stored on the session row. Add a `devices` table when one of the features above actually shows up. The migration is easy: group existing sessions by a client-generated device ID.\n\n## Suggested build order\n\n1. `sessions` table. Every login creates a row. Access tokens carry `sid`.\n2. Refresh token rotation with a `session_id` foreign key, plus reuse detection.\n3. `GET /sessions` and `DELETE /sessions/:id` endpoints, and a \"sign out all others\" action.\n4. Settings UI: list sessions with device name, location and last active time, and a revoke button on each.\n5. Optional: the Redis `revoked_sid` check for immediate revocation.\n6. Optional: a `devices` table once trusted-device or push features need it.\n\nIf you tell me your stack (framework, whether you already use JWTs, web or mobile clients), I can turn this into a concrete schema and endpoint plan."
+              }
+            ]
+          },
+          {
+            "score": 0,
+            "passed": false,
+            "turns": 2,
+            "costUsd": 0.08365919999999999,
+            "judgeCostUsd": 0.004198999999999998,
+            "durationSeconds": 28,
+            "startedAt": "2026-09-22T21:26:37.369Z",
+            "error": null,
+            "tracePath": "C:\\Users\\rob\\AppData\\Local\\Temp\\claude-eval-O2YwxA\\out\\trace.jsonl",
+            "skippedPaidGraders": false,
+            "graders": [
+              {
+                "name": "criteria",
+                "passed": false,
+                "weight": 1,
+                "explanation": "judge votes: FAIL FAIL FAIL",
+                "withOnly": false,
+                "scored": true,
+                "judgeVotes": [
+                  false,
+                  false,
+                  false
+                ],
+                "evidence": "Your repo is empty, so this is the concept model rather than a plan built on existing code. Here's how the three ideas fit together.\n\n## 1. What each thing is\n\n```\nUser ──1:N──▶ Device ──1:N──▶ Session ──1:N──▶ Refresh token (rotating) ──1:N──▶ Access token\n               (hardware)      (one login)       (stored in DB)                     (stateless, ~5–15 min)\n```\n\n| Concept | What it really is | Stored? | Lifetime | Can you revoke it? |\n|---|---|---|---|---|\n| **Device** | A label for a physical client (\"Rob's iPhone\") | Optional | Indefinite | Only by revoking the sessions under it |\n| **Session** | One successful login on one client | **Yes (this is the key row)** | Days to months | **Yes. Revocation happens here.** |\n| **Refresh token** | Proof you hold that session; swapped for a new one on every use | Yes, hashed, linked to a session | Until used or expired | Revoked with its session |\n| **Access token** | Short-lived bearer credential (e.g. a JWT) | No | Minutes | No. It just expires. |\n\n**The core idea:** a session is the thing that gets revoked. Tokens are credentials that belong to a session. A device is just a way to group sessions for display.\n\n## 2. How revocation plays out\n\n```\n User clicks \"Sign out of iPhone\"\n            │\n            ▼\n UPDATE sessions SET revoked_at = now() WHERE id = :sid AND user_id = :uid\n            │\n            ├──▶ Refresh token: the next /refresh call finds the session revoked → 401 → client logs out\n            │\n            └──▶ Access token still in flight: either\n                   (a) let it expire (≤ TTL, simple), or\n                   (b) put the sid claim in the JWT and check it against a revoked-sessions\n                       cache (Redis set with TTL = access TTL) → immediate cutoff\n```\n\n\"Sign out everywhere\" is the same query without the `id` filter. \"Sign out everywhere except here\" adds `AND id != :current_sid`.\n\n## 3. The minimal schema\n\n```\nsessions\n  id              uuid  PK            ← goes into the access token as the `sid` claim\n  user_id         FK\n  device_label    text                ← \"Chrome on macOS\" (parsed from user-agent, user can rename)\n  created_at, last_seen_at, last_ip\n  revoked_at      timestamp NULL\n\nrefresh_tokens\n  token_hash      PK\n  session_id      FK → sessions\n  replaced_by     NULL | token_hash   ← rotation chain\n  expires_at\n```\n\n**Reuse detection:** if a refresh token comes in that was already replaced, someone stole it. Revoke the whole session.\n\n## 4. Do you need a separate `devices` table?\n\n**Probably not yet.** In most apps, one device holds one active session, so a label on the session row covers it. Add a real `devices` table only if you need something that has to outlive a login:\n- \"Trusted device, skip MFA\"\n- Push notification tokens\n- A persistent device name or ID across logouts and re-logins\n\nIf you add it later, `sessions.device_id` becomes a foreign key, and \"revoke device\" means revoking all of that device's sessions. The session is still the thing you revoke.\n\n## 5. Decisions to make before planning the work\n\n1. **Access token TTL and whether you need instant cutoff.** This picks option (a) or (b) above. Option (b) adds a lookup on every request.\n2. **Where the refresh token lives on web:** httpOnly cookie or app storage. This decides how `/refresh` authenticates.\n3. **What counts as \"the current session\"** in the UI, so users can't accidentally revoke themselves, or can do so on purpose.\n4. **Whether a password change or MFA reset revokes all sessions.** Usually yes, except the current one.\n\nTell me your stack and whether you already have JWTs or server sessions, and I'll turn this into concrete implementation steps."
+              }
+            ]
+          }
+        ]
+      },
+      "aggregates": {
+        "score": 0,
+        "passRate": 0,
+        "scoreWithout": 0,
+        "passRateWithout": 0,
+        "delta": 0
+      }
+    }
+  ],
+  "aggregates": {
+    "casesTotal": 1,
+    "casesPassed": 0,
+    "overallScore": 0,
+    "overallPassRate": 0,
+    "meanDelta": 0
+  }
+}
