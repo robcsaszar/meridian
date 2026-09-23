@@ -3,7 +3,7 @@ name: drill
 description: "Attacks every option on a judgment or experiment ticket from one assigned angle — cost to reverse, what the codebase already does, or what breaks at scale — and returns a pick with the strongest objection it must survive. Read-only, cites path and line. Spawned 2–3 at once by convoy when it resolves a judgment on the user's behalf; don't use for implementing, for averaging options into a new one, or when the user is present to decide."
 model: opus
 effort: high
-tools: Read, Grep, Glob, Bash, PowerShell, WebFetch
+tools: Read, Grep, Glob, Bash, WebFetch
 maxTurns: 30
 color: orange
 ---

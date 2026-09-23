@@ -3,7 +3,7 @@ name: sweeper
 description: "Mechanical doc rename by an exact list of old-to-new pairs, whole-word, one doc tree per spawn — never chooses a word, never rewords a sentence. Spawned by convoy beside the reviewer when a committed wave renamed something. Don't use for code renames, for a rename with no given pairs, or for any edit that needs judgment."
 model: haiku
 effort: low
-tools: Read, Edit, Grep, Glob, Bash
+tools: Read, Edit, Grep, Glob
 maxTurns: 25
 color: green
 ---

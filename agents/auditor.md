@@ -3,7 +3,7 @@ name: auditor
 description: "Cross-surface UI audit of the pages and components a map changed, run once after the last route item commits, against whatever design authority the repository actually has. Reports concrete defects per file as one severity-ranked table. Read-only. Spawned by convoy; don't use for per-item review, code correctness, or to apply fixes."
 model: opus
 effort: high
-tools: Read, Grep, Glob, Bash, PowerShell
+tools: Read, Grep, Glob
 maxTurns: 40
 color: purple
 ---
