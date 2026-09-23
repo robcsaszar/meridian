@@ -2,6 +2,59 @@
 
 All notable changes to this project are documented here. Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versioning follows [SemVer](https://semver.org/).
 
+## [1.0.0] - 2026-09-23
+
+The package becomes **rutter**: a plan-to-done pipeline in one plugin, rather
+than a single planning skill. The repository is renamed to match; GitHub's
+permanent redirect keeps existing clone URLs and release links working.
+
+### Added
+
+- **transit** — works one ticket on a map and stops. Never two crossings in a run.
+- **convoy** — sails a whole route unattended, in waves, under one orchestrator
+  that owns every gate and commit.
+- **Six agents**, each with a pinned model, effort and tool list: `rutter:scout`,
+  `rutter:builder`, `rutter:reviewer`, `rutter:drill`, `rutter:auditor`,
+  `rutter:sweeper`. They resolve only by their namespaced name.
+- `references/vocabulary.md` — the single definition of every `meridian:` and
+  `mode:` label, read by all three skills so it cannot drift between them.
+- `references/commands.md` — how a repository's build, test and lint commands are
+  found: a declared `## Commands` block, else discovery from package.json,
+  Makefile, pyproject.toml, Cargo.toml, go.mod or a justfile, else a stated
+  absence. Nothing in this package names a package manager.
+- `references/design-authority.md` — the same ladder for design review. A declared
+  row may name a skill, which is how a repository plugs its own design skill into
+  the audit without this package knowing about it.
+- `bin/guard-agent.sh` — convoy's spawn guard, restricting unattended runs to the
+  roster. Verified end to end: a non-roster spawn is refused, a roster spawn is
+  allowed, and a session that never loads convoy is unaffected.
+- A source-consistency lint and CI workflow covering vocabulary drift, hardcoded
+  build commands, bare agent references, origin-project residue, and version
+  parity.
+- An eval suite runnable with `claude plugin eval`. Three cases ship, each
+  measured at 10 runs per arm with a delta larger than its spread. Five are
+  quarantined with the data that disqualified them.
+- `SECURITY.md` now states what each agent can reach, and that a constraint
+  written in an agent's prose is not an enforced control.
+
+### Changed
+
+- **meridian names both exits.** One ticket goes to transit, a whole map goes to
+  convoy. It charts and hands over; it implements neither.
+- Ticket labels are `meridian:*` and modes are `mode:agent` / `mode:human`,
+  replacing `plan:*` and `ready-for-*`.
+- The audit agent no longer requires a design skill this package does not ship.
+  It degrades to whatever authority a repository has, and says which checks ran.
+- Agent capabilities narrowed to what each one uses: the audit agent and the doc
+  renamer lost shell access they never invoked, so their "read-only" and
+  "never commits" claims are now structural rather than aspirational.
+
+### Fixed
+
+- Shell scripts are pinned to LF. A CRLF shebang would have made the spawn guard
+  a no-op on Linux and macOS — silently, since a hook that cannot run blocks
+  nothing.
+
 ## [0.4.0] - 2026-09-04
 
 ### Added
@@ -68,6 +121,7 @@ All notable changes to this project are documented here. Format follows [Keep a 
 
 - Initial release: meridian skill.
 
+[1.0.0]: https://github.com/robcsaszar/rutter/releases/tag/v1.0.0
 [0.3.0]: https://github.com/robcsaszar/rutter/releases/tag/v0.3.0
 [0.2.1]: https://github.com/robcsaszar/rutter/releases/tag/v0.2.1
 [0.2.0]: https://github.com/robcsaszar/rutter/releases/tag/v0.2.0

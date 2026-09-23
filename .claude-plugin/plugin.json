@@ -1,6 +1,6 @@
 {
   "name": "rutter",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "description": "A plan-to-done pipeline in one plugin: meridian charts a body of work into a durable decision map and a route of tracer-bullet tickets, transit works one ticket at a time, and convoy sails a whole map to done under one orchestrator. Ships the agents they spawn and a single shared ticket vocabulary.",
   "author": {
     "name": "Rob Csaszar",
