@@ -5,7 +5,7 @@ allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
 
 Use the `transit` skill for this task.
 
-Work this research ticket. It is unclaimed and has no blockers.
+Work this research ticket against the plugin you are running from. It is unclaimed and has no blockers.
 
 > ## Question
-> Is the lockfile's `computedHash` field recomputable offline from the packument, or does it require a network call to the registry?
+> Which of this plugin's agents can write files or run shell commands, and where is that stated?
