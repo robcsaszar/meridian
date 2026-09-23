@@ -75,7 +75,7 @@ Completion: every CONFIRMED finding fixed and committed, or on the map with the 
 
 ## Phase 5 — Interface audit
 
-After the last route item commits, one `rutter:auditor` over every touched surface — MANDATORY READ [`references/briefs.md`](references/briefs.md) § Audit, which carries the Decision-log lines for those surfaces; the agent preloads the `interface` skill itself. Per-item checks miss what only a cross-surface view sees: the same content rendered six ways. A finding that contradicts a logged decision is declined, quoting the decision-log line verbatim as the reason, or filed as a judgment ticket — never applied. The code follows the log line, not the finding's reading of it: "declined" means the finding, never the decision.
+After the last route item commits, one `rutter:auditor` over every touched surface — MANDATORY READ [`references/briefs.md`](references/briefs.md) § Audit, which carries the Decision-log lines for those surfaces; the agent resolves the repo's design authority itself per `${CLAUDE_PLUGIN_ROOT}/references/design-authority.md`, which is where a repo's own review skill plugs in. Per-item checks miss what only a cross-surface view sees: the same content rendered six ways. A finding that contradicts a logged decision is declined, quoting the decision-log line verbatim as the reason, or filed as a judgment ticket — never applied. The code follows the log line, not the finding's reading of it: "declined" means the finding, never the decision.
 
 Apply the rest as § Implement briefs partitioned by file. Gate, commit.
 

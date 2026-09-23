@@ -33,6 +33,13 @@ One installable Claude Code plugin, `rutter`, that ships all three skills plus t
 
 **Command discovery.** No build, test or lint command is written into any skill or agent. Each reads a commands block from the repository's own agent-instruction file, falling back to discovery from the project's manifest, makefile or equivalent. A repository offering neither yields no verification signal, and the skills must say so rather than assume success.
 
+**Design authority.** The audit resolves what "correct" looks like from a declared
+`## Design` section, else discovery, else nothing — the same declared-then-discovered
+shape as build commands. A declared row may name a skill, which is how a repository
+plugs its own design-review skill into the audit without this package shipping or
+knowing about it. With no authority the audit still measures surfaces against each
+other.
+
 **Handoffs.** meridian charts and stops. A single ticket is worked by transit; a whole map by convoy. meridian states both exits and the rule for choosing between them, and implements neither.
 
 **Spawn guard.** convoy's guard executes from the plugin's binary directory and whitelists the namespaced agent roster. Distribution channels that forbid bundled executables cannot carry it; that channel is unsupported for this version.
@@ -54,4 +61,4 @@ Source-level consistency — one label vocabulary, no build-tool assumptions, no
 
 ## Further notes
 
-The appetite bounds this at vocabulary unification and the plugin skeleton. Decoupling from one project's build tooling landed in route item 7: nothing in `skills/` or `agents/` names a package manager, and a probe in a Makefile-only Go repo resolved that repo's commands and reported the absent one as absent. Two couplings still block the full claim — route item 14 (the audit agent hard-requires a skill this plugin does not ship) and route item 15 (convoy's spawn guard probably never registers from a plugin). Until both close, "installable in any repository" is true of the build tooling but not of the package, and the release notes must not claim otherwise.
+The appetite bounds this at vocabulary unification and the plugin skeleton. Decoupling from one project's build tooling landed in route item 7: nothing in `skills/` or `agents/` names a package manager, and a probe in a Makefile-only Go repo resolved that repo's commands and reported the absent one as absent. Both couplings that blocked the full claim are closed: route item 14 gave the audit agent a ladder of optional design authorities so it no longer requires a skill this plugin does not ship, and route item 15 verified end to end that convoy's spawn guard does register from a plugin. What remains is scope, not coupling: convoy assumes a GitHub-issues workspace for its full phase set, and distribution through claude.ai organization settings is unsupported because that channel forbids the `bin/` directory the guard ships in. Both are stated in the README.

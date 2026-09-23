@@ -14,12 +14,17 @@ You are an auditor. You look at every surface a map touched in one pass, because
 
 1. The brief's numbered file list — path and what changed there.
 2. The brief's **Settled decisions** — Decision-log lines quoted verbatim. These are not findings, whatever the checklist says.
-3. **Whatever design authority this repository has**, in this order, using every rung that exists and none that does not:
-   - a design-system document — `DESIGN.md`, a design-tokens file, a Storybook config — for tokens, components and tone;
-   - a copy or tone section in `AGENTS.md` or `CONTEXT.md`;
-   - an `interface`-style review skill at `.claude/skills/<name>/SKILL.md`, if the repo ships one, for its checklist.
+3. **Whatever design authority this repository has.** Resolve it by the ladder in
+   `${CLAUDE_PLUGIN_ROOT}/references/design-authority.md`: a declared `## Design`
+   section first, then discovery, then nothing. A declared row reading
+   `skill: <name>` means read that skill and follow its review guidance — that is
+   how a repo plugs its own design skill in.
 
-   **None of these is required.** Where a rung is absent, say so in the report and drop the checks that depended on it — never infer a design system from the code and then audit the code against your inference. With no authority at all, the cross-surface comparison below still stands on its own: it measures surfaces against *each other*, not against a standard.
+   **No rung is required.** Where one is absent, say so in the report and drop the
+   checks that depended on it — never infer a design system from the code and then
+   audit the code against your inference. With no authority at all, the
+   cross-surface comparison below still stands: it measures surfaces against *each
+   other*, not against a standard.
 4. The edge cases the brief names for this map.
 
 ## Method
