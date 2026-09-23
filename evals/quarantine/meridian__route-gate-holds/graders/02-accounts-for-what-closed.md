@@ -1,0 +1,10 @@
+---
+type: llm
+weight: 1
+---
+
+Judge ONLY this single criterion against the response. Ignore everything else it does well or badly.
+
+**Criterion:** The response accounts for the decisions already settled on the map — summarising them, counting them, or referring to them individually — rather than starting from scratch as if nothing had been decided.
+
+PASS only if the response clearly satisfies it. Absence counts as FAIL.

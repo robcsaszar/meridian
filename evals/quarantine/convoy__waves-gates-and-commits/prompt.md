@@ -1,11 +1,11 @@
 ---
 max_turns: 20
-allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+allowed_tools: [Read, Glob, Grep, Skill]
 ---
 
 Use the `convoy` skill for this task.
 
-Here is my map. Work the whole route unattended and tell me exactly how you will do it before you start.
+Here is my map. Do NOT begin any work and do not modify anything. Describe, in full, exactly how you would work this whole route unattended: how you would group the items, who does what, who commits, how review happens, and how you would know it was finished.
 
 ```markdown
 # Checkout flow

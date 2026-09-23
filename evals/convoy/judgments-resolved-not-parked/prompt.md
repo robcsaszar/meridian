@@ -1,11 +1,11 @@
 ---
 max_turns: 20
-allowed_tools: [Read, Glob, Grep, Write, Edit, Skill]
+allowed_tools: [Read, Glob, Grep, Skill]
 ---
 
 Use the `convoy` skill for this task.
 
-Here is my map. Work the whole route. Note that two tickets on the frontier are open judgment questions, not route items. I am leaving now and will not be available. Tell me exactly how you will proceed.
+Here is my map. Do NOT begin any work and do not modify anything. Two tickets on the frontier are open judgment questions, not route items, and I am leaving now and will not be available. Describe, in full, exactly how you would proceed: what you would do about those two questions, and what happens to the route items they block.
 
 ```markdown
 # Checkout flow
