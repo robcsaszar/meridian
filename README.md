@@ -1,36 +1,83 @@
-<p align="center"><img src=".github/meridian.png" width="400" alt="meridian banner"/></p>
+<p align="center"><img src=".github/meridian.png" width="400" alt="rutter banner"/></p>
 
-# meridian
+# rutter
 
-Planning skill charts your work. Diagnose the fog, diverge honestly, decide one question at a time. Dead ends stay on the chart.
+Plan a body of work, then sail it. Three skills that share one vocabulary: **meridian** charts, **transit** works one ticket, **convoy** works the whole route.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![skills.sh](https://skills.sh/b/robcsaszar/meridian)](https://skills.sh/robcsaszar/meridian)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-A skill that turns an idea, feature, bug, or open-ended brainstorm into a planned body of work — a durable map of decisions, kept on the issue tracker your team already uses, that a whole effort can steer by.
-
-This skill follows the [Agent Skills specification](https://agentskills.io/specification) so it can be used by any skills-compatible agent.
+A Claude Code plugin for taking an idea from "I don't know what shape this is" to shipped work — through a durable map of decisions that outlives any single session, and a route of tracer-bullet tickets an agent or a person can pick up.
 
 ## Installation
 
-### npx skills
-    npx skills add robcsaszar/meridian
-
 ### Marketplace
-    /plugin marketplace add robcsaszar/meridian
-    /plugin install robcsaszar-meridian@meridian
 
-### Manually
-Copy the `skills/meridian/` directory into your project's `.claude/skills/`.
+    /plugin marketplace add robcsaszar/rutter
+    /plugin install rutter@rutter
 
-## What it does
+### npx skills
 
-Bring it anything from a half-formed hunch to a well-understood feature. The skill first settles where the map will live: it reads a persisted choice from `CONTEXT.md` or `AGENTS.md`, or infers one from the repo — GitHub Issues, Jira, or a `plans/` file when there is no tracker — and confirms with you before writing anything into a shared system, offering to record the choice so later sessions skip the question.
+    npx skills add robcsaszar/rutter
 
-Then it takes bearings: how clear is the destination? When the way is fogbound — no ideas, samey ideas, a constraint that feels unbreakable, a nagging sense you're solving the wrong problem — it runs a structured divergence pass where techniques are allowed to fail visibly and weak ideas die in the open. Once a direction survives, it charts the frontier breadth-first: every open decision becomes its own ticket, typed by what unblocks it — your judgment, research, an experiment, or a task that has to happen first — and wired with the tracker's native blocking so the frontier is visible in the tracker's own UI.
+Installs all three skills: the plugin manifest declares them, so they are discovered wherever they sit in the tree.
 
-Charting is one session. Each session after that claims one ticket and resolves it: judgment by interview, one question at a time with a recommended answer and its weakness; research by a scout subagent whose findings you sign off; experiments deferred to a spike; tasks done or handed to you as a checklist. Resolved decisions accrete on the map, ruled-out paths stay on the chart with their kill reasons, and fog graduates into fresh tickets as answers sharpen it.
+### Try it without installing
 
-The map is done when no open decisions remain. A final session distills the decision log into a route: ordered work items with acceptance criteria, each traceable to the decision that shaped it. It never implements; it ends by naming the first move.
+    claude --plugin-dir /path/to/this/repo
+
+## The three skills
+
+| Skill | Use it when | It stops when |
+|---|---|---|
+| **meridian** | You need a plan. An idea, a feature, a bug, or a brainstorm that has no shape yet. | The route is charted and the first move is named. It never implements. |
+| **transit** | You want one ticket worked. | That one ticket is resolved and recorded. Never two in a run. |
+| **convoy** | You want the whole route worked without stopping, and you are leaving. | The route is complete, reviewed, and audited. |
+
+**The handoff rule: one ticket goes to transit, a whole map goes to convoy.** meridian charts and hands over; it implements neither.
+
+## A first map
+
+Ask for a plan in your own words — you do not need to name the skill:
+
+> I want to add per-device session revocation but I don't know the right shape. Chart it.
+
+meridian takes bearings, and if the way is fogbound it runs a divergence pass where weak ideas die in the open. It then sweeps the work breadth-first and puts the open decisions to you in rounds, each with a recommendation and that recommendation's main weakness. Answered decisions land in a decision log; killed paths stay on the chart with their kill reasons.
+
+By default the map is a file at `plans/<slug>.md`. A tracker is used only when you configure or name one — never inferred from the fact that your repo has issues. To persist the choice, add a `## Planning` section to `AGENTS.md` or `CONTEXT.md`.
+
+When the frontier is empty, meridian confirms the seams with you, slices the work into tracer bullets, and names the first move. Then hand it to transit or convoy.
+
+## Vocabulary
+
+Every ticket carries one type label, and tasks and route items also declare a mode. All three skills read the same definition, in [`references/vocabulary.md`](references/vocabulary.md):
+
+| Label | Means | Resolved by |
+|---|---|---|
+| `meridian:decision` | Only you can answer it | You, in conversation |
+| `meridian:scout` | Evidence answers it | An agent, alone |
+| `meridian:prototype` | Only a throwaway artifact settles it | You, reacting to it |
+| `meridian:task` | Nothing to decide; work that must happen first | Declared |
+| `meridian:slice` | A route item | Declared |
+
+`mode:agent` may be taken unattended. `mode:human` needs hands, eyes, or access an agent lacks. On a `plans/` file there are no labels: the type is the Frontier table's Type column and the mode is an `[agent]` or `[human]` marker.
+
+## Agents
+
+The plugin ships the roster convoy and transit spawn, each with a pinned model, effort and tool list: `rutter:scout`, `rutter:builder`, `rutter:reviewer`, `rutter:drill`, `rutter:auditor`, `rutter:sweeper`.
+
+They resolve **only** by their namespaced name. A project-level agent of the same bare name coexists rather than overriding, so dropping your own `builder.md` into `.claude/agents/` will not change what these skills spawn.
+
+## Your build commands
+
+Nothing here hardcodes a package manager. Each skill resolves your repo's commands at the start of a run, in this order: a `## Commands` block in `AGENTS.md` or `CONTEXT.md`, then discovery from `package.json`, `Makefile`, `pyproject.toml`, `Cargo.toml`, `go.mod` or a `justfile`. A repo with none of those has no verification signal, and the run says so rather than inventing one. See [`references/commands.md`](references/commands.md).
+
+## Known limits
+
+- **convoy assumes a GitHub-issues workspace** for its full phase set.
+- **convoy's spawn guard is not yet verified to register when installed as a plugin.** It restricts unattended runs to the pinned roster; treat it as unproven until that is confirmed.
+- **Distribution through claude.ai organization settings is unsupported**, because that channel forbids the `bin/` directory the guard ships in.
+- **The agent roster has not yet had a safety review** for arbitrary repositories. `rutter:builder` and `rutter:sweeper` can write files; several agents can run shell commands.
 
 ## License
+
 [MIT](LICENSE) © Rob Csaszar

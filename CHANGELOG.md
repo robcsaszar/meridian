@@ -68,7 +68,7 @@ All notable changes to this project are documented here. Format follows [Keep a 
 
 - Initial release: meridian skill.
 
-[0.3.0]: https://github.com/robcsaszar/meridian/releases/tag/v0.3.0
-[0.2.1]: https://github.com/robcsaszar/meridian/releases/tag/v0.2.1
-[0.2.0]: https://github.com/robcsaszar/meridian/releases/tag/v0.2.0
-[0.1.0]: https://github.com/robcsaszar/meridian/commit/fd0d846d0cbbd299e190c41fdf4e94326d86d3f0
+[0.3.0]: https://github.com/robcsaszar/rutter/releases/tag/v0.3.0
+[0.2.1]: https://github.com/robcsaszar/rutter/releases/tag/v0.2.1
+[0.2.0]: https://github.com/robcsaszar/rutter/releases/tag/v0.2.0
+[0.1.0]: https://github.com/robcsaszar/rutter/commit/fd0d846d0cbbd299e190c41fdf4e94326d86d3f0

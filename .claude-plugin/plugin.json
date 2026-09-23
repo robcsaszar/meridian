@@ -6,7 +6,7 @@
     "name": "Rob Csaszar",
     "url": "https://nhg.design"
   },
-  "repository": "https://github.com/robcsaszar/meridian",
+  "repository": "https://github.com/robcsaszar/rutter",
   "license": "MIT",
   "keywords": [
     "planning",
@@ -17,5 +17,10 @@
     "orchestration",
     "subagents",
     "claude-code"
+  ],
+  "skills": [
+    "./skills/meridian",
+    "./skills/transit",
+    "./skills/convoy"
   ]
 }
