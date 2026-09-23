@@ -74,7 +74,6 @@ Nothing here hardcodes a package manager. Each skill resolves your repo's comman
 ## Known limits
 
 - **convoy assumes a GitHub-issues workspace** for its full phase set.
-- **convoy's spawn guard is not yet verified to register when installed as a plugin.** It restricts unattended runs to the pinned roster; treat it as unproven until that is confirmed.
 - **Distribution through claude.ai organization settings is unsupported**, because that channel forbids the `bin/` directory the guard ships in.
 - **`rutter:drill` can fetch web pages and run shell commands.** That combination is a prompt-injection path; it is a deliberate trade, and [`SECURITY.md`](SECURITY.md) explains how to remove it. That file also states exactly what each agent can reach.
 

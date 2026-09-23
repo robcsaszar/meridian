@@ -35,14 +35,22 @@ which sometimes means reading what is outside the repository. If that risk is
 not acceptable for your work, remove `WebFetch` from `agents/drill.md` after
 installing, or avoid unattended convoy runs on repositories you do not control.
 
-### Known gap: the spawn guard
+### The spawn guard
 
-convoy declares a `PreToolUse` hook that restricts unattended runs to the six
-agents above. **It is not yet verified to register when convoy is installed as a
-plugin** — no plugin in the official marketplace declares hooks in skill
-frontmatter, and the plugin inventory reports none for this one. Until that is
-confirmed, treat the roster as a convention the skills follow, not as an
-enforced limit.
+convoy declares a `PreToolUse` hook that restricts spawns to the six agents
+above while it is loaded. This was verified end to end against an installed
+plugin:
+
+- with convoy loaded, `subagent_type: general-purpose` is **refused** with the
+  guard's message;
+- with convoy loaded, `subagent_type: rutter:scout` is **allowed**;
+- in a session where convoy was never loaded, an ordinary spawn is **unaffected**.
+
+The guard is scoped to convoy being loaded, so enabling this plugin does not
+gate agent use elsewhere in your session. Note that `claude plugin details`
+reports `Hooks (0)` for this plugin — it counts plugin-level hooks declared in
+`hooks/hooks.json`, and does not see a hook declared in a skill's frontmatter.
+The guard still runs.
 
 ### Running unattended
 
